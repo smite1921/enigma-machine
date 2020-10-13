@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:elevation="20dp">
+
+    <View
+        android:id="@+id/top_banner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#689e38"
+        app:layout_constraintBottom_toTopOf="@+id/title3"
+        app:layout_constraintDimensionRatio="4:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="Settings"
+        android:textColor="#ffffff"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/top_banner"
+        app:layout_constraintEnd_toEndOf="@+id/top_banner"
+        app:layout_constraintStart_toStartOf="@+id/top_banner"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Reflector"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_banner" />
+
+    <RadioGroup
+        android:id="@+id/reflector_option"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/title3"
+        app:layout_constraintTop_toBottomOf="@+id/title3">
+
+        <RadioButton
+            android:id="@+id/reflector_ukwa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="#f94080"
+            android:text="UKW-A"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/reflector_ukwb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="#f94080"
+            android:text="UKW-B"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/reflector_ukwc"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="#f94080"
+            android:fontFamily="sans-serif"
+            android:text="UKW-C"
+            android:textSize="14sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/title4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Rotor"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reflector_option" />
+
+    <Spinner
+        android:id="@+id/rotor1_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#f94080"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toStartOf="@+id/rotor2_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/reflector_option"
+        app:layout_constraintTop_toBottomOf="@+id/title4" />
+
+    <Spinner
+        android:id="@+id/rotor2_option"
+
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#f94080"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/rotor1_option"
+        app:layout_constraintEnd_toStartOf="@+id/rotor3_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rotor1_option"
+        app:layout_constraintTop_toTopOf="@+id/rotor1_option" />
+
+    <Spinner
+        android:id="@+id/rotor3_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#f94080"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/rotor2_option"
+        app:layout_constraintEnd_toEndOf="@+id/reflector_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rotor2_option"
+        app:layout_constraintTop_toTopOf="@+id/rotor2_option" />
+
+    <TextView
+        android:id="@+id/title5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Ring"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rotor1_option" />
+
+    <Spinner
+        android:id="@+id/ring1_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#f94080"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toStartOf="@+id/ring2_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/reflector_option"
+        app:layout_constraintTop_toBottomOf="@+id/title5" />
+
+    <Spinner
+        android:id="@+id/ring3_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#f94080"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/ring2_option"
+        app:layout_constraintEnd_toEndOf="@+id/reflector_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ring2_option"
+        app:layout_constraintTop_toTopOf="@+id/ring2_option" />
+
+    <Spinner
+        android:id="@+id/ring2_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#f94080"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/ring1_option"
+        app:layout_constraintEnd_toStartOf="@+id/ring3_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ring1_option"
+        app:layout_constraintTop_toTopOf="@+id/ring1_option" />
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Plugboard"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ring1_option" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/lamp_q"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="Q"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_w"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/lamp_w"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="W"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_q"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_e"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_q" />
+
+            <Button
+                android:id="@+id/lamp_e"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="E"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_w"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_r"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_w" />
+
+            <Button
+                android:id="@+id/lamp_r"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="R"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_e"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_t"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_e" />
+
+            <Button
+                android:id="@+id/lamp_t"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="T"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_r"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_z"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_r" />
+
+            <Button
+                android:id="@+id/lamp_z"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="Z"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_t"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_u"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_t" />
+
+            <Button
+                android:id="@+id/lamp_u"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="U"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_z"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_i"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_z" />
+
+            <Button
+                android:id="@+id/lamp_i"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="I"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_u"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/lamp_o"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_u" />
+
+            <Button
+                android:id="@+id/lamp_o"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="O"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_i"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_i" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/lamp_a"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="A"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_s"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/lamp_s"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="S"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_a"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_d"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_a" />
+
+            <Button
+                android:id="@+id/lamp_d"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="D"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_s"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_f"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_s" />
+
+            <Button
+                android:id="@+id/lamp_f"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="F"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_d"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_g"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_d" />
+
+            <Button
+                android:id="@+id/lamp_g"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="G"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_f"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_h"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_f" />
+
+            <Button
+                android:id="@+id/lamp_h"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="H"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_g"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_j"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_g" />
+
+            <Button
+                android:id="@+id/lamp_j"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="J"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_h"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_k"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_h" />
+
+            <Button
+                android:id="@+id/lamp_k"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="K"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_j"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_j" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/lamp_p"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="P"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_y"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/lamp_y"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="Y"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_p"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_x"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_p" />
+
+            <Button
+                android:id="@+id/lamp_x"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="X"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_y"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_c"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_y" />
+
+            <Button
+                android:id="@+id/lamp_c"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="C"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_x"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_v"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_x" />
+
+            <Button
+                android:id="@+id/lamp_v"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="V"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_c"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_b"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_c" />
+
+            <Button
+                android:id="@+id/lamp_b"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="B"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_v"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_n"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_v" />
+
+            <Button
+                android:id="@+id/lamp_n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="N"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_b"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_m"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_b" />
+
+            <Button
+                android:id="@+id/lamp_m"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="M"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_n"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/lamp_l"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_n" />
+
+            <Button
+                android:id="@+id/lamp_l"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/enigma_settings_plugboard_default"
+                android:clickable="false"
+                android:text="L"
+                android:textColor="#E0E0E0"
+                app:layout_constraintBaseline_toBaselineOf="@+id/lamp_m"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lamp_m" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/close"
+        style="@android:style/Widget.Material.Button.Borderless.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Close"
+        android:textColor="#f94080"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
