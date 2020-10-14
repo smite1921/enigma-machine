@@ -76,8 +76,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 ```
 
 ## Screenshots
-<img src="https://user-images.githubusercontent.com/43019533/95921859-138e4d00-0d80-11eb-9945-2c5b98d126c2.png" align="left" width=30%/>
-<img src="https://user-images.githubusercontent.com/43019533/95921866-14bf7a00-0d80-11eb-8540-a447a6c17579.png" align="left" width=30%/> <br />
+<img src="https://user-images.githubusercontent.com/43019533/95949688-3856e480-0dc1-11eb-9aa4-d583f46ba711.png" algin="left" width=60%/>
 
-
+<img src="https://user-images.githubusercontent.com/43019533/95948979-b5815a00-0dbf-11eb-9d4b-6447b7d89340.png" align="center" width=60%/>
 
