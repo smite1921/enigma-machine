@@ -2,6 +2,9 @@ package com.smitpatel.enigmamachine;
 
 public class EnigmaUtils {
 
+        // Shared Preferences
+        public static final String ENIGMA_MUTE = "enigma_mute";
+
         // Rotors - Turnover Position
         public static final String[] ENIGMA_ROTOR_OPTIONS = {"I", "II", "III", "IV", "V"};
         public static final int ENIGMA_ROTOR_1_TURNOVER = 16;

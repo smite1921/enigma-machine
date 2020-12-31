@@ -1,8 +1,9 @@
 package com.smitpatel.enigmamachine;
 
 import android.app.Dialog;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -42,14 +46,13 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
 
     /**
      * Constructor for Settings Prompt
-     * @param context
      * @param r1
      * @param r2
      * @param r3
      * @param re
      * @param pb
      */
-    public SettingsDialogFragment(Context context, Rotor r1, Rotor r2, Rotor r3,
+    public SettingsDialogFragment(Rotor r1, Rotor r2, Rotor r3,
                                   Reflector re, Plugboard pb) {
         Log.d(TAG, ": SettingsDialogFragment");
         // Enigma parts
@@ -60,7 +63,7 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
         mPlugboard = pb;
         mFlag = false;
 
-        mSounds = SoundEffects.getInstance(context);
+        mSounds = SoundEffects.getInstance(getContext());
         storeInitialValues();
     }
 
@@ -88,8 +91,7 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
         // Resize the dialog to full screen.
         if (getDialog() != null && getDialog().getWindow() != null) {
             Window window = getDialog().getWindow();
-            ViewGroup.LayoutParams lp = window.getAttributes();
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, lp.height);
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         }
         super.onResume();
     }
@@ -121,6 +123,15 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
         Spinner[] rings = {mRingSpinner1, mRingSpinner2, mRingSpinner3};
         for (Spinner ring: rings) ring.setOnItemSelectedListener(this);
 
+        SwitchMaterial muteSwitch = view.findViewById(R.id.mute_switch);
+        muteSwitch.setChecked(!mSounds.isMute());
+        muteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mSounds.setMute(!isChecked);
+            }
+        });
+
         Button cancel = view.findViewById(R.id.close);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +145,16 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
                     textCode.setText("");
                 }
                 getDialog().dismiss();
+            }
+        });
+
+        Button instructions = view.findViewById(R.id.instructions);
+        instructions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://github.com/smite1921/enigma_machine/blob/master/README.md#guide");
+                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                startActivity(intent);
             }
         });
         return view;
@@ -296,8 +317,8 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
         mRotorSpinner2 = view.findViewById(R.id.rotor2_option);
         mRotorSpinner3 = view.findViewById(R.id.rotor3_option);
         mRingSpinner1 = view.findViewById(R.id.ring1_option);
-        mRingSpinner2 = view.findViewById(R.id.ring3_option);
-        mRingSpinner3 = view.findViewById(R.id.ring2_option);
+        mRingSpinner2 = view.findViewById(R.id.ring2_option);
+        mRingSpinner3 = view.findViewById(R.id.ring3_option);
 
         ArrayAdapter<String> rotorAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, EnigmaUtils.ENIGMA_ROTOR_OPTIONS);
         Spinner[] slots = {mRotorSpinner1, mRotorSpinner2, mRotorSpinner3};

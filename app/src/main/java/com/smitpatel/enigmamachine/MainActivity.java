@@ -1,17 +1,28 @@
 package com.smitpatel.enigmamachine;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.shawnlin.numberpicker.NumberPicker;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, NumberPicker.OnValueChangeListener {
 
@@ -60,10 +71,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onClick(View v) {
                 mSounds.playSound(EnigmaUtils.ENIGMA_SOUND_DEFAULT);
-                SettingsDialogFragment dialog = new SettingsDialogFragment(getApplicationContext(),mRotor1, mRotor2, mRotor3, mReflector, mPlugboard);
+                SettingsDialogFragment dialog = new SettingsDialogFragment(mRotor1, mRotor2, mRotor3, mReflector, mPlugboard);
                 dialog.show(getSupportFragmentManager(), "dialog");
             }
         });
+    }
+
+    /**
+     * For saving mute state.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSounds.saveMuteState();
     }
 
     /**
@@ -90,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 .append(event.getAction())
                 .append(")");
         Log.d(TAG, ": onTouch - (view, event) = " + log);
+
 
         switch(event.getAction()) {
             // Button released
@@ -175,6 +196,78 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 mRotor3.setPosition(newVal - 1);
                 break;
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.enigma_copy_options, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        String copyText;
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip;
+        switch (item.getItemId()) {
+            case R.id.copy_raw:
+                copyText = generateCopyText(0);
+                clip = ClipData.newPlainText("enigma text", copyText);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.copy_code:
+                copyText = generateCopyText(1);
+                clip = ClipData.newPlainText("enigma text", copyText);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.copy_settings:
+                copyText = generateCopyText(2);
+                clip = ClipData.newPlainText("enigma text", copyText);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
+
+    private String generateCopyText(int option) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (option == 0) {
+            stringBuilder.append("Raw Text: ").append(mRaw.getText());
+        }
+        else if (option == 1) {
+            stringBuilder.append("Encoded Text: ").append(mCoded.getText());
+        }
+        else if (option == 2) {
+            stringBuilder.append("Rotor Start: ").append(numberToLetter(mPicker1.getValue()-1))
+                    .append(" ").append(numberToLetter(mPicker2.getValue()-1)).append(" ")
+                    .append(numberToLetter(mPicker3.getValue()-1)).append("\n");
+            stringBuilder.append("Rotor Slots: ").append(mRotor1.getIdentifier()).append(" ")
+                    .append(mRotor2.getIdentifier()).append(" ").append(mRotor3.getIdentifier())
+                    .append("\n");
+            stringBuilder.append("Ring Settings: ").append(numberToLetter(mRotor1.getRing()))
+                    .append(" ").append(numberToLetter(mRotor2.getRing())).append(" ")
+                    .append(numberToLetter(mRotor3.getRing())).append("\n");
+            stringBuilder.append("Reflector: ").append(mReflector.getIdentifer()).append("\n");
+            stringBuilder.append("Plugboard Pairs: ");
+            int[] pairs = mPlugboard.getPlugboardMap();
+            Set<Integer> coveredNumbers = new HashSet<>();
+            for (int i=0;i<pairs.length;i++){
+                if ((pairs[i] != -1) && (!coveredNumbers.contains(i))
+                        && (!coveredNumbers.contains(pairs[i]))) {
+                    stringBuilder.append(numberToLetter(i)).append(numberToLetter(pairs[i]))
+                            .append(" ");
+                    coveredNumbers.add(i);
+                    coveredNumbers.add(pairs[i]);
+                }
+            }
+        }
+        return stringBuilder.toString();
     }
 
     /**
@@ -324,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mRaw.setMovementMethod(new ScrollingMovementMethod());
         mCoded = findViewById(R.id.text_code);
         mScrollview = findViewById(R.id.scrollview);
-
+        registerForContextMenu(findViewById(R.id.textfields));
         // Setup number pickers
         mPicker1 = findViewById(R.id.rotor_1);
         mPicker2 = findViewById(R.id.rotor_2);

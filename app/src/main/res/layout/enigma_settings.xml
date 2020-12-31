@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:elevation="20dp">
 
@@ -12,9 +12,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#689e38"
-        app:layout_constraintBottom_toTopOf="@+id/title3"
+
         app:layout_constraintDimensionRatio="4:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,30 +30,54 @@
         app:layout_constraintBottom_toBottomOf="@+id/top_banner"
         app:layout_constraintEnd_toEndOf="@+id/top_banner"
         app:layout_constraintStart_toStartOf="@+id/top_banner"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/top_banner" />
+
+    <TextView
+        android:id="@+id/title6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Sounds"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/mute_switch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_banner" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:theme="@style/SwitchTheme"
+        android:id="@+id/mute_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/title3"
+        app:layout_constraintStart_toStartOf="@+id/reflector_option"
+        app:layout_constraintTop_toBottomOf="@id/title6" />
+
 
     <TextView
         android:id="@+id/title3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="Reflector"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/reflector_option"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_banner" />
+        app:layout_constraintTop_toBottomOf="@+id/mute_switch" />
+
 
     <RadioGroup
         android:id="@+id/reflector_option"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/title4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/title3"
         app:layout_constraintTop_toBottomOf="@+id/title3">
 
@@ -90,10 +115,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="Rotor"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/rotor1_option"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reflector_option" />
 
@@ -103,10 +128,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp"
         android:backgroundTint="#f94080"
         android:padding="3dp"
         android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/title5"
         app:layout_constraintEnd_toStartOf="@+id/rotor2_option"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/reflector_option"
@@ -148,10 +173,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="Ring"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/ring1_option"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rotor1_option" />
 
@@ -164,6 +189,7 @@
         android:backgroundTint="#f94080"
         android:padding="3dp"
         android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/title2"
         app:layout_constraintEnd_toStartOf="@+id/ring2_option"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/reflector_option"
@@ -203,11 +229,12 @@
         android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="Plugboard"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ring1_option" />
 
@@ -216,10 +243,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/close"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title2">
 
@@ -611,21 +639,28 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </LinearLayout>
 
+    <Button
+        android:id="@+id/instructions"
+        style="@android:style/Widget.Material.Button.Borderless.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Instructions"
+        android:textColor="#f94080"
+        app:layout_constraintBottom_toBottomOf="@+id/close"
+        app:layout_constraintEnd_toStartOf="@+id/close"
+        app:layout_constraintTop_toTopOf="@+id/close" />
 
     <Button
         android:id="@+id/close"
         style="@android:style/Widget.Material.Button.Borderless.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Close"
         android:textColor="#f94080"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

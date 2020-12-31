@@ -800,7 +800,6 @@
             android:layout_weight="1">
 
             <View
-                android:clickable="false"
                 android:id="@+id/placeholder_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -808,6 +807,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
+                android:clickable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/spacebar"
                 app:layout_constraintHorizontal_weight="1"
@@ -1263,48 +1263,49 @@
         app:layout_constraintVertical_bias="0.0" />
 
 
-        <HorizontalScrollView
-            android:id="@+id/scrollview"
-            android:overScrollMode="never"
-            android:fillViewport="true"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/view2"
-            app:layout_constraintEnd_toStartOf="@+id/guideline13"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/view4">
+    <HorizontalScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toBottomOf="@+id/view4">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:weightSum="2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/textfields"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2">
 
-                <TextView
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:id="@+id/text_raw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="serif-monospace" />
+            <TextView
+                android:id="@+id/text_raw"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="serif-monospace"
+                android:gravity="center_vertical"
+                android:maxLines="1" />
 
-                <TextView
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:id="@+id/text_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="serif-monospace"/>
+            <TextView
+                android:id="@+id/text_code"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="serif-monospace"
+                android:gravity="center_vertical"
+                android:maxLines="1" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </HorizontalScrollView>
+    </HorizontalScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

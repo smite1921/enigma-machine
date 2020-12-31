@@ -1,7 +1,5 @@
 package com.smitpatel.enigmamachine;
 
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -73,6 +71,10 @@ public class Plugboard {
 //        Log.d(TAG, ":getTopColor");
 //        Log.d(TAG, "\tmNextColor: " + mNextColor.toString());
         return mNextColor.peek();
+    }
+
+    public int[] getPlugboardMap() {
+        return mPlugboardMap;
     }
 
     public Map<Integer, Integer> getColorMap() {

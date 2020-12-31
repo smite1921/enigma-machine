@@ -1,15 +1,20 @@
 package com.smitpatel.enigmamachine;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
+import android.preference.PreferenceManager;
 
 public class SoundEffects {
+
 
     private static SoundEffects mSingleton = null;
     private SoundPool mSoundPool;
     private int mDefaultSound, mKeySound, mSpaceSound, mDeleteSound, mRotorSound, mPlugSound, mChangesSound;
     private boolean mDefaultFlag, mKeyFlag, mSpaceFlag, mDeleteFlag, mRotorFlag, mPlugFlag, mChangesFlag;
+    private boolean mMute;
+    private SharedPreferences mPreferences;
 
     /**
      * Constructor
@@ -24,6 +29,9 @@ public class SoundEffects {
                 .setAudioAttributes(attributes)
                 .setMaxStreams(7)
                 .build();
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mMute = mPreferences.getBoolean(EnigmaUtils.ENIGMA_MUTE, false);
 
         // Load sounds
         mKeySound = mSoundPool.load(context, R.raw.key_press,1);
@@ -70,12 +78,28 @@ public class SoundEffects {
         return mSingleton;
     }
 
+    public void setMute(boolean mute) {
+        this.mMute = mute;
+    }
+
+    public boolean isMute() {
+        return mMute;
+    }
+
     /**
      * This method should be used after context using SoundEffects class is going away.
      */
     public void shutDown() {
-        mSoundPool.release();
-        mSoundPool = null;
+        if (mSoundPool != null) {
+            mSoundPool.release();
+            mSoundPool = null;
+        }
+    }
+
+    public void saveMuteState() {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putBoolean(EnigmaUtils.ENIGMA_MUTE, mMute);
+        editor.apply();
     }
 
     /**
@@ -83,43 +107,45 @@ public class SoundEffects {
      * @param soundID
      */
     public void playSound(int soundID) {
-        int soundLoad = -1;
-        boolean playFlag = false;
+        if (!mMute) {
+            int soundLoad = -1;
+            boolean playFlag = false;
 
-        switch (soundID) {
-            case EnigmaUtils.ENIGMA_SOUND_KEY:
-                soundLoad = mKeySound;
-                playFlag = mKeyFlag;
-                break;
-            case EnigmaUtils.ENIGMA_SOUND_SPACE:
-                soundLoad = mSpaceSound;
-                playFlag = mSpaceFlag;
-                break;
-            case EnigmaUtils.ENIGMA_SOUND_DELETE:
-                soundLoad = mDeleteSound;
-                playFlag = mDeleteFlag;
-                break;
-            case EnigmaUtils.ENIGMA_SOUND_ROTOR:
-                soundLoad = mRotorSound;
-                playFlag = mRotorFlag;
-                break;
-            case EnigmaUtils.ENIGMA_SOUND_DEFAULT:
-                soundLoad = mDefaultSound;
-                playFlag = mDefaultFlag;
-                break;
-            case EnigmaUtils.ENIGMA_SOUND_CHANGES:
-                soundLoad = mChangesSound;
-                playFlag = mChangesFlag;
-                break;
-            case EnigmaUtils.ENIGMA_SOUND_PLUG:
-                soundLoad = mPlugSound;
-                playFlag = mPlugFlag;
-                break;
-        }
+            switch (soundID) {
+                case EnigmaUtils.ENIGMA_SOUND_KEY:
+                    soundLoad = mKeySound;
+                    playFlag = mKeyFlag;
+                    break;
+                case EnigmaUtils.ENIGMA_SOUND_SPACE:
+                    soundLoad = mSpaceSound;
+                    playFlag = mSpaceFlag;
+                    break;
+                case EnigmaUtils.ENIGMA_SOUND_DELETE:
+                    soundLoad = mDeleteSound;
+                    playFlag = mDeleteFlag;
+                    break;
+                case EnigmaUtils.ENIGMA_SOUND_ROTOR:
+                    soundLoad = mRotorSound;
+                    playFlag = mRotorFlag;
+                    break;
+                case EnigmaUtils.ENIGMA_SOUND_DEFAULT:
+                    soundLoad = mDefaultSound;
+                    playFlag = mDefaultFlag;
+                    break;
+                case EnigmaUtils.ENIGMA_SOUND_CHANGES:
+                    soundLoad = mChangesSound;
+                    playFlag = mChangesFlag;
+                    break;
+                case EnigmaUtils.ENIGMA_SOUND_PLUG:
+                    soundLoad = mPlugSound;
+                    playFlag = mPlugFlag;
+                    break;
+            }
 
-        // only play the sound if the sound has been loaded by SoundPool.
-        if (playFlag) {
-            mSoundPool.play(soundLoad, 1,1,0,0, 1);
+            // only play the sound if the sound has been loaded by SoundPool.
+            if (playFlag && (mSoundPool != null)) {
+                mSoundPool.play(soundLoad, 1, 1, 0, 0, 1);
+            }
         }
     }
 
