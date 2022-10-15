@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <integer name="rotor_min_index_value">1</integer>
+    <integer name="rotor_max_index_value">26</integer>
+
+</resources>

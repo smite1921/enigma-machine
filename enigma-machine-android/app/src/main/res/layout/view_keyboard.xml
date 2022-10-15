@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="@drawable/enigma_main_keyboard_background"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_enigma_main">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/button_q"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:focusable="true"
+            android:text="@string/letter_q"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_w"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_w"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_w"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_q"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_e"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_q" />
+
+        <Button
+            android:id="@+id/button_e"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_e"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_w"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_r"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_w" />
+
+        <Button
+            android:id="@+id/button_r"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_r"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_e"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_t"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_e" />
+
+        <Button
+            android:id="@+id/button_t"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_t"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_r"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_z"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_r" />
+
+        <Button
+            android:id="@+id/button_z"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_z"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_t"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_u"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_t" />
+
+        <Button
+            android:id="@+id/button_u"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_u"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_z"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_i"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_z" />
+
+        <Button
+            android:id="@+id/button_i"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_i"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_u"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/button_o"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_u" />
+
+        <Button
+            android:id="@+id/button_o"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_o"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_i"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_i" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/button_a"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_a"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_s"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_s"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_s"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_a"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_d"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_a" />
+
+        <Button
+            android:id="@+id/button_d"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_d"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_s"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_f"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_s" />
+
+        <Button
+            android:id="@+id/button_f"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_f"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_d"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_g"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_d" />
+
+        <Button
+            android:id="@+id/button_g"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_g"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_f"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_h"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_f" />
+
+        <Button
+            android:id="@+id/button_h"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_h"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_g"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_j"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_g" />
+
+        <Button
+            android:id="@+id/button_j"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_j"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_h"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_k"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_h" />
+
+        <Button
+            android:id="@+id/button_k"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_k"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_j"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_j" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/button_p"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_p"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_y"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_y"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_y"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_p"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_x"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_p" />
+
+        <Button
+            android:id="@+id/button_x"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_x"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_y"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_c"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_y" />
+
+        <Button
+            android:id="@+id/button_c"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_c"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_x"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_v"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_x" />
+
+        <Button
+            android:id="@+id/button_v"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_v"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_c"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_b"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_c" />
+
+        <Button
+            android:id="@+id/button_b"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_b"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_v"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_n"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_v" />
+
+        <Button
+            android:id="@+id/button_n"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_n"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_b"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_m"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_b" />
+
+        <Button
+            android:id="@+id/button_m"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_m"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_n"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_l"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_n" />
+
+        <Button
+            android:id="@+id/button_l"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_button"
+            android:text="@string/letter_l"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_m"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_m" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/placeholder_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_spacebar"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/button_spacebar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/enigma_main_spacebar"
+            app:layout_constraintBottom_toBottomOf="@+id/placeholder_view"
+            app:layout_constraintEnd_toStartOf="@+id/button_delete"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="4"
+            app:layout_constraintStart_toEndOf="@+id/placeholder_view"
+            app:layout_constraintTop_toTopOf="@+id/placeholder_view" />
+
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/enigma_main_delete"
+            android:gravity="center"
+            android:text="@string/delete"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_spacebar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/button_spacebar"
+            app:layout_constraintTop_toTopOf="@+id/button_spacebar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

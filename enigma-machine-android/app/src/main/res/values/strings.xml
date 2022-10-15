@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Enigma Machine</string>
+
+    <string name="letter_a">A</string>
+    <string name="letter_b">B</string>
+    <string name="letter_c">C</string>
+    <string name="letter_d">D</string>
+    <string name="letter_e">E</string>
+    <string name="letter_f">F</string>
+    <string name="letter_g">G</string>
+    <string name="letter_h">H</string>
+    <string name="letter_i">I</string>
+    <string name="letter_j">J</string>
+    <string name="letter_k">K</string>
+    <string name="letter_l">L</string>
+    <string name="letter_m">M</string>
+    <string name="letter_n">N</string>
+    <string name="letter_o">O</string>
+    <string name="letter_p">P</string>
+    <string name="letter_q">Q</string>
+    <string name="letter_r">R</string>
+    <string name="letter_s">S</string>
+    <string name="letter_t">T</string>
+    <string name="letter_u">U</string>
+    <string name="letter_v">V</string>
+    <string name="letter_w">W</string>
+    <string name="letter_x">X</string>
+    <string name="letter_y">Y</string>
+    <string name="letter_z">Z</string>
+    <string name="delete">DEL</string>
+
+</resources>

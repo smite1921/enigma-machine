@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/activity_enigma_main">
+
+    <View
+        android:id="@+id/view18"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_wood_background_dark"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plate"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintDimensionRatio="10:1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toBottomOf="@+id/main_background" />
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view21"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/view18"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view21"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view22"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view7"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view22"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view23"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view21"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view23"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view24"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view22"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view24"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view25"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view23"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view25"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view26"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view24"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view26"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view27"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view25"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view27"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view28"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view26"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view28"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view29"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view27"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view29"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view30"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view28"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view30"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toStartOf="@+id/view31"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view29"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view31"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/enigma_main_plug"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintDimensionRatio="10:23"
+        app:layout_constraintEnd_toEndOf="@+id/view18"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view30"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0" />
+
+</merge>
