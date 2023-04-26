@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Enigma Machine</string>
+    <string name="enigma_model">M3 1939</string>
 
     <string name="letter_a">A</string>
     <string name="letter_b">B</string>
@@ -28,5 +29,20 @@
     <string name="letter_y">Y</string>
     <string name="letter_z">Z</string>
     <string name="delete">DEL</string>
+    <string name="rotor_label_placeholder">I</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="sound_option">Sounds</string>
+    <string name="reflector_option">Reflector</string>
+    <string name="reflector_a">UKW-A</string>
+    <string name="reflector_b">UKW-B</string>
+    <string name="reflector_c">UKW-C</string>
+    <string name="rotor_option">Rotor</string>
+    <string name="position_option">Position</string>
+    <string name="ring_option">Ring</string>
+    <string name="plugboard_option">Plugboard</string>
+    <string name="instructions_button">Instructions</string>
+    <string name="close_button">Close</string>
+    <string name="settings_changed_toast_message">New settings applied</string>
 
 </resources>

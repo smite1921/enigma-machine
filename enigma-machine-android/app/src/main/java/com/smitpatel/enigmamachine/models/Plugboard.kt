@@ -19,6 +19,19 @@ object Plugboard {
         plugboardMap.fill(-1, 0, plugboardMap.size)
     }
 
+    fun getAllPairs() : Set<Pair<Int, Int>> {
+        val pairs = mutableSetOf<Pair<Int, Int>>()
+        val visitedLetters = mutableSetOf<Int>()
+        plugboardMap.forEachIndexed{ index, element ->
+            if (element != -1 && !visitedLetters.contains(element) && !visitedLetters.contains(index)) {
+                pairs.add(Pair(index, element))
+                visitedLetters.add(element)
+                visitedLetters.add(index)
+            }
+        }
+        return pairs
+    }
+
     fun getPair(letter: Int) = if (hasPair(letter)) plugboardMap[letter] else letter
 
     private fun hasPair(letter: Int) = plugboardMap[letter] != -1

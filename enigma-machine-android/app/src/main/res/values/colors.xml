@@ -4,4 +4,25 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="defaultTextColor">#969696</color>
+
+    <color name="settingsPrimaryColor">#689e38</color>
+    <color name="settingsAccentColor">#f94080</color>
+
+    <color name="plugboardColor1">#e6194B</color>
+    <color name="plugboardColor2">#3cb44b</color>
+    <color name="plugboardColor3">#ffe119</color>
+    <color name="plugboardColor4">#4363d8</color>
+    <color name="plugboardColor5">#f58231</color>
+    <color name="plugboardColor6">#911eb4</color>
+    <color name="plugboardColor7">#42d4f4</color>
+    <color name="plugboardColor8">#f032e6</color>
+    <color name="plugboardColor9">#bfef45</color>
+    <color name="plugboardColor10">#fabed4</color>
+    <color name="plugboardColor11">#469990</color>
+    <color name="plugboardColor12">#9A6324</color>
+    <color name="plugboardColor13">#808000</color>
+
 </resources>

@@ -1,36 +1,39 @@
 package com.smitpatel.enigmamachine.models
 
+import java.util.Stack
+
 object EnigmaModel {
 
+    val historyStack : Stack<EnigmaHistoryItem> = Stack()
+
     // Left rotor
-    var rotorOne = Rotor.ROTOR_ONE
-        set(value) {
-            value.position = 0
-            value.ring = 0
-            field = value
-        }
+    var rotorOne = Rotor.makeRotor(
+        rotorOption = Rotor.RotorOption.ROTOR_ONE,
+        position = 0,
+        ring = 0,
+    )
 
     // Middle rotor
-    var rotorTwo = Rotor.ROTOR_TWO
-        set(value) {
-            value.position = 0
-            value.ring = 0
-            field = value
-        }
+    var rotorTwo = Rotor.makeRotor(
+        rotorOption = Rotor.RotorOption.ROTOR_TWO,
+        position = 0,
+        ring = 0,
+    )
 
     // Right rotor
-    var rotorThree = Rotor.ROTOR_THREE
-        set(value) {
-            value.position = 0
-            value.ring = 0
-            field = value
-        }
+    var rotorThree = Rotor.makeRotor(
+        rotorOption = Rotor.RotorOption.ROTOR_THREE,
+        position = 0,
+        ring = 0,
+    )
 
     var reflector = Reflector.REFLECTOR_UKW_B
 
     val plugboard = Plugboard
 
     fun input(letter: Int): Int {
+
+        historyStack.addHistoryItem()
 
         // Rotor Shifts
         when {
@@ -80,11 +83,43 @@ object EnigmaModel {
      * Plugboard Pairs: /
      */
     fun setDefault() {
-        rotorOne = Rotor.ROTOR_ONE
-        rotorTwo = Rotor.ROTOR_TWO
-        rotorThree = Rotor.ROTOR_THREE
+        rotorOne = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_ONE,
+            position = 0,
+            ring = 0,
+        )
+        rotorTwo = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_TWO,
+            position = 0,
+            ring = 0,
+        )
+        rotorThree = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_THREE,
+            position = 0,
+            ring = 0,
+        )
         reflector = Reflector.REFLECTOR_UKW_B
         plugboard.removeAllPairs()
+        historyStack.addHistoryItem()
     }
+
+    private fun Stack<EnigmaHistoryItem>.addHistoryItem() {
+        this.push(
+            EnigmaHistoryItem(
+                rotorOneOption = rotorOne.rotorOption,
+                rotorTwoOption = rotorTwo.rotorOption,
+                rotorThreeOption = rotorThree.rotorOption,
+                rotorOnePosition = rotorOne.position,
+                rotorTwoPosition = rotorTwo.position,
+                rotorThreePosition = rotorThree.position,
+                ringOneOption = rotorOne.ring,
+                ringTwoOption = rotorTwo.ring,
+                ringThreeOption = rotorThree.ring,
+                reflectorOption = reflector,
+                plugboardPairs = plugboard.getAllPairs()
+            )
+        )
+    }
+
 
 }

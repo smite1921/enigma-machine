@@ -62,9 +62,15 @@ class EnigmaModelTest {
      * Plugboard Pairs:
      */
     fun messageDifferentRotor() {
-        enigma.rotorOne = Rotor.ROTOR_FIVE
-        enigma.rotorTwo = Rotor.ROTOR_FOUR
-        enigma.rotorThree = Rotor.ROTOR_TWO
+        enigma.rotorOne = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FIVE,
+        )
+        enigma.rotorTwo = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FOUR,
+        )
+        enigma.rotorThree = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_TWO,
+        )
 
         enigma.rotorOne.position = toIndex('X')
         enigma.rotorTwo.position = toIndex('Y')
@@ -86,9 +92,15 @@ class EnigmaModelTest {
      * Plugboard Pairs:
      */
     fun messageDifferentRings() {
-        enigma.rotorOne = Rotor.ROTOR_FIVE
-        enigma.rotorTwo = Rotor.ROTOR_FOUR
-        enigma.rotorThree = Rotor.ROTOR_TWO
+        enigma.rotorOne = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FIVE,
+        )
+        enigma.rotorTwo = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FOUR,
+        )
+        enigma.rotorThree = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_TWO,
+        )
 
         enigma.rotorOne.position = toIndex('X')
         enigma.rotorTwo.position = toIndex('Y')
@@ -114,9 +126,15 @@ class EnigmaModelTest {
      * Plugboard Pairs:
      */
     fun messageDifferentReflector() {
-        enigma.rotorOne = Rotor.ROTOR_FIVE
-        enigma.rotorTwo = Rotor.ROTOR_FOUR
-        enigma.rotorThree = Rotor.ROTOR_TWO
+        enigma.rotorOne = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FIVE,
+        )
+        enigma.rotorTwo = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FOUR,
+        )
+        enigma.rotorThree = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_TWO,
+        )
 
         enigma.reflector = Reflector.REFLECTOR_UKW_C
 
@@ -144,9 +162,15 @@ class EnigmaModelTest {
      * Plugboard Pairs: (AE) (DP) (QW) (LK) (SR)
      */
     fun messageDifferentPlugboard() {
-        enigma.rotorOne = Rotor.ROTOR_FIVE
-        enigma.rotorTwo = Rotor.ROTOR_FOUR
-        enigma.rotorThree = Rotor.ROTOR_TWO
+        enigma.rotorOne = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FIVE,
+        )
+        enigma.rotorTwo = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FOUR,
+        )
+        enigma.rotorThree = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_TWO,
+        )
 
         enigma.reflector = Reflector.REFLECTOR_UKW_C
 

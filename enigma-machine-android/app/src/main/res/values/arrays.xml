@@ -30,4 +30,14 @@
         <item>Z</item>
     </string-array>
 
+    <string-array name="rotor_options">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+    </string-array>
+
+
+
 </resources>

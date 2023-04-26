@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".ui.EnigmaMainActivity">
+    tools:context=".ui.main.EnigmaMainActivity">
 
     <View
         android:id="@+id/main_background"
@@ -33,7 +33,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <include
         android:id="@+id/lampboard"
@@ -232,6 +232,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.31" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

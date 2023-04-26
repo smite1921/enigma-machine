@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:elevation="20dp"
+    tools:context=".ui.setting.SettingsFragment">
+
+    <View
+        android:id="@+id/top_banner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/settingsPrimaryColor"
+        app:layout_constraintDimensionRatio="4:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/settings_title"
+        android:textColor="#ffffff"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/top_banner"
+        app:layout_constraintEnd_toEndOf="@+id/top_banner"
+        app:layout_constraintStart_toStartOf="@+id/top_banner"
+        app:layout_constraintTop_toTopOf="@+id/top_banner" />
+
+    <TextView
+        android:id="@+id/title3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/reflector_option"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/reflector_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_banner" />
+
+    <RadioGroup
+        android:id="@+id/reflector_option"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/title4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/title3"
+        app:layout_constraintTop_toBottomOf="@+id/title3">
+
+        <RadioButton
+            android:id="@+id/reflector_ukwa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/settingsAccentColor"
+            android:text="@string/reflector_a"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/reflector_ukwb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/settingsAccentColor"
+            android:text="@string/reflector_b"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/reflector_ukwc"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/settingsAccentColor"
+            android:fontFamily="sans-serif"
+            android:text="@string/reflector_c"
+            android:textSize="14sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/title4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/rotor_option"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/rotor1_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reflector_option" />
+
+    <Spinner
+        android:id="@+id/rotor1_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/title6"
+        app:layout_constraintEnd_toStartOf="@+id/rotor2_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/reflector_option"
+        app:layout_constraintTop_toBottomOf="@+id/title4" />
+
+    <Spinner
+        android:id="@+id/rotor2_option"
+
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/rotor1_option"
+        app:layout_constraintEnd_toStartOf="@+id/rotor3_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rotor1_option"
+        app:layout_constraintTop_toTopOf="@+id/rotor1_option" />
+
+    <Spinner
+        android:id="@+id/rotor3_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/rotor2_option"
+        app:layout_constraintEnd_toEndOf="@+id/reflector_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rotor2_option"
+        app:layout_constraintTop_toTopOf="@+id/rotor2_option" />
+
+    <TextView
+        android:id="@id/title6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/position_option"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/position1_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rotor1_option" />
+
+    <Spinner
+        android:id="@+id/position1_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@+id/title6"
+        app:layout_constraintBottom_toTopOf="@id/title5"
+        app:layout_constraintEnd_toStartOf="@+id/position2_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/reflector_option"
+        tools:layout_editor_absoluteY="397dp" />
+
+    <Spinner
+        android:id="@+id/position2_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/position1_option"
+        app:layout_constraintEnd_toStartOf="@+id/position3_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/position1_option"
+        app:layout_constraintTop_toTopOf="@+id/position1_option" />
+
+    <Spinner
+        android:id="@+id/position3_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/position2_option"
+        app:layout_constraintEnd_toEndOf="@+id/reflector_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/position2_option"
+        app:layout_constraintTop_toTopOf="@+id/position2_option" />
+
+    <TextView
+        android:id="@+id/title5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/ring_option"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/ring1_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/position1_option" />
+
+    <Spinner
+        android:id="@+id/ring1_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/title2"
+        app:layout_constraintEnd_toStartOf="@+id/ring2_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/reflector_option"
+        app:layout_constraintTop_toBottomOf="@+id/title5" />
+
+    <Spinner
+        android:id="@+id/ring3_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/ring2_option"
+        app:layout_constraintEnd_toEndOf="@+id/reflector_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ring2_option"
+        app:layout_constraintTop_toTopOf="@+id/ring2_option" />
+
+    <Spinner
+        android:id="@+id/ring2_option"
+        style="@style/Platform.Widget.AppCompat.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/settingsAccentColor"
+        android:padding="3dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/ring1_option"
+        app:layout_constraintEnd_toStartOf="@+id/ring3_option"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ring1_option"
+        app:layout_constraintTop_toTopOf="@+id/ring1_option" />
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/plugboard_option"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/plugboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ring1_option" />
+
+    <com.smitpatel.enigmamachine.views.Plugboard
+        android:id="@+id/plugboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title2" />
+
+    <Button
+        android:id="@+id/close"
+        style="@android:style/Widget.Material.Button.Borderless.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/close_button"
+        android:textColor="@color/settingsAccentColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/mute_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/SwitchTheme"
+        app:layout_constraintBottom_toBottomOf="@+id/title3"
+        app:layout_constraintEnd_toEndOf="@+id/reflector_option"
+        app:layout_constraintTop_toTopOf="@+id/title3" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/sound_option"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mute_switch"
+        app:layout_constraintEnd_toStartOf="@+id/mute_switch"
+        app:layout_constraintTop_toTopOf="@+id/mute_switch" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

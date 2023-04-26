@@ -41,7 +41,10 @@ dependencies {
     def lifecycle_version = "2.6.0-alpha02"
 
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
-    
+
+    // Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData

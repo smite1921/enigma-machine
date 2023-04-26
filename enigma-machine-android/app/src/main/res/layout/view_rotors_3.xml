@@ -16,19 +16,20 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/enigma_main_dial"
         android:descendantFocusability="blocksDescendants"
-        app:layout_constraintBottom_toBottomOf="@+id/rotors"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="2:5.5"
         app:layout_constraintEnd_toStartOf="@+id/rotor_2"
         app:layout_constraintHorizontal_weight=".8"
-        app:layout_constraintStart_toStartOf="@+id/rotors"
-        app:layout_constraintTop_toTopOf="@+id/rotors"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:np_dividerDistance="19sp"
         app:np_dividerThickness="0dp"
         app:np_max="@integer/rotor_max_index_value"
         app:np_min="@integer/rotor_min_index_value"
         app:np_selectedTextSize="18sp"
         app:np_textSize="18sp"
-        app:np_wheelItemCount="1" />
+        app:np_wheelItemCount="1"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <com.shawnlin.numberpicker.NumberPicker
         android:id="@+id/rotor_2"
@@ -51,7 +52,8 @@
         app:np_min="@integer/rotor_min_index_value"
         app:np_selectedTextSize="18sp"
         app:np_textSize="18sp"
-        app:np_wheelItemCount="1" />
+        app:np_wheelItemCount="1"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <com.shawnlin.numberpicker.NumberPicker
         android:id="@+id/rotor_3"
@@ -75,7 +77,8 @@
         app:np_min="@integer/rotor_min_index_value"
         app:np_selectedTextSize="18sp"
         app:np_textSize="18sp"
-        app:np_wheelItemCount="1" />
+        app:np_wheelItemCount="1"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <View
         android:id="@+id/power_switch"
@@ -84,11 +87,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/enigma_main_power_switch"
-        android:clickable="true"
-        android:focusable="false"
         app:layout_constraintBottom_toTopOf="@+id/model"
         app:layout_constraintDimensionRatio="3:2.25"
-        app:layout_constraintEnd_toEndOf="@+id/rotors"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2.25"
         app:layout_constraintStart_toEndOf="@+id/rotor_3"
@@ -100,14 +101,58 @@
         android:id="@+id/model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="M3 1939"
-        android:textColor="#373737"
+        android:text="@string/enigma_model"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/rotor_3"
         app:layout_constraintDimensionRatio="10:1"
         app:layout_constraintEnd_toEndOf="@+id/power_switch"
         app:layout_constraintStart_toStartOf="@+id/power_switch"
         app:layout_constraintTop_toBottomOf="@+id/power_switch" />
+
+    <TextView
+        android:id="@+id/rotor1_label"
+        android:text="@string/rotor_label_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:textColor="#373737"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/rotor_1"
+        app:layout_constraintStart_toStartOf="@+id/rotor_1"
+        app:layout_constraintTop_toBottomOf="@+id/rotor_1" />
+
+    <TextView
+        android:id="@+id/rotor2_label"
+        android:text="@string/rotor_label_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:textColor="#373737"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/rotor_2"
+        app:layout_constraintStart_toStartOf="@+id/rotor_2"
+        app:layout_constraintTop_toBottomOf="@+id/rotor_2" />
+
+    <TextView
+        android:id="@+id/rotor3_label"
+        android:text="@string/rotor_label_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:textColor="#373737"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/rotor_3"
+        app:layout_constraintStart_toStartOf="@+id/rotor_3"
+        app:layout_constraintTop_toBottomOf="@+id/rotor_3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
