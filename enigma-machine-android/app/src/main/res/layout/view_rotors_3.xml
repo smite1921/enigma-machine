@@ -114,45 +114,48 @@
 
     <TextView
         android:id="@+id/rotor1_label"
-        android:text="@string/rotor_label_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:fontFamily="serif-monospace"
         android:gravity="center"
+        android:text="@string/rotor_label_placeholder"
         android:textColor="#373737"
         android:textSize="11sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/rotor_1"
         app:layout_constraintStart_toStartOf="@+id/rotor_1"
-        app:layout_constraintTop_toBottomOf="@+id/rotor_1" />
+        app:layout_constraintTop_toBottomOf="@+id/rotor_1"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/rotor2_label"
-        android:text="@string/rotor_label_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:textSize="11sp"
+        android:text="@string/rotor_label_placeholder"
         android:textColor="#373737"
+        android:textSize="11sp"
         android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/rotor1_label"
         app:layout_constraintEnd_toEndOf="@+id/rotor_2"
-        app:layout_constraintStart_toStartOf="@+id/rotor_2"
-        app:layout_constraintTop_toBottomOf="@+id/rotor_2" />
+        app:layout_constraintStart_toStartOf="@+id/rotor_2" />
 
     <TextView
         android:id="@+id/rotor3_label"
-        android:text="@string/rotor_label_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:textSize="11sp"
+        android:text="@string/rotor_label_placeholder"
         android:textColor="#373737"
+        android:textSize="11sp"
         android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/rotor1_label"
         app:layout_constraintEnd_toEndOf="@+id/rotor_3"
-        app:layout_constraintStart_toStartOf="@+id/rotor_3"
-        app:layout_constraintTop_toBottomOf="@+id/rotor_3" />
+        app:layout_constraintStart_toStartOf="@+id/rotor_3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

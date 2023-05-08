@@ -103,6 +103,21 @@ object EnigmaModel {
         historyStack.addHistoryItem()
     }
 
+    fun getCurrentSettings() : EnigmaHistoryItem =
+        EnigmaHistoryItem(
+            rotorOneOption = rotorOne.rotorOption,
+            rotorTwoOption = rotorTwo.rotorOption,
+            rotorThreeOption = rotorThree.rotorOption,
+            rotorOnePosition = rotorOne.position,
+            rotorTwoPosition = rotorTwo.position,
+            rotorThreePosition = rotorThree.position,
+            ringOneOption = rotorOne.ring,
+            ringTwoOption = rotorTwo.ring,
+            ringThreeOption = rotorThree.ring,
+            reflectorOption = reflector,
+            plugboardPairs = plugboard.getAllPairs()
+        )
+
     private fun Stack<EnigmaHistoryItem>.addHistoryItem() {
         this.push(
             EnigmaHistoryItem(

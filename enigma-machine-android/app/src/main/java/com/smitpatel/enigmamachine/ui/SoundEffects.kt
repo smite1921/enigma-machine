@@ -1,25 +1,19 @@
 package com.smitpatel.enigmamachine.ui
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.media.AudioAttributes
 import android.media.SoundPool
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.smitpatel.enigmamachine.R
-import java.util.prefs.Preferences
-
-private const val ENIGMA_SOUND_PREFERENCES = "enigma_sound_preferences"
-
-private val Context.datastore by preferencesDataStore(
-    name = ENIGMA_SOUND_PREFERENCES
-)
 
 object SoundEffects : DefaultLifecycleObserver {
 
-    lateinit var lifecycle: Lifecycle
+    private const val ENIGMA_SOUND_PREFERENCES = "enigma_sound_preferences"
+    private const val ENIGMA_SOUND_MUTE = "enigma_sound_is_mute_on"
+
+    private lateinit var sharedPreferences : SharedPreferences
 
     private var soundPool : SoundPool? = null
     var isMuteOn : Boolean = false
@@ -41,6 +35,10 @@ object SoundEffects : DefaultLifecycleObserver {
     private var changesMadeSoundFlag : Boolean = false
 
     fun initialize(context: Context) {
+        sharedPreferences = context.getSharedPreferences(ENIGMA_SOUND_PREFERENCES, Context.MODE_PRIVATE)
+
+        isMuteOn = sharedPreferences.getBoolean(ENIGMA_SOUND_MUTE,false)
+
         val attributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -72,6 +70,13 @@ object SoundEffects : DefaultLifecycleObserver {
                 }
             }
         }
+
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(ENIGMA_SOUND_MUTE, isMuteOn)
+        editor.apply()
     }
 
     override fun onDestroy(owner: LifecycleOwner) {

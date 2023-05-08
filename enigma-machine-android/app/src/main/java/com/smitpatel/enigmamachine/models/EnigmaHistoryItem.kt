@@ -12,4 +12,4 @@ data class EnigmaHistoryItem(
     val ringThreeOption: Int,
     val reflectorOption : Reflector,
     val plugboardPairs: Set<Pair<Int, Int>>,
-)
+) : java.io.Serializable

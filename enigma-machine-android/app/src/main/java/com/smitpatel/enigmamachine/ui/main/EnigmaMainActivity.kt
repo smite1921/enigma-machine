@@ -23,6 +23,7 @@ class EnigmaMainActivity : AppCompatActivity() {
     private val viewModel : EnigmaViewModel by viewModels()
 
     private val sounds : SoundEffects = SoundEffects
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEnigmaMainBinding.inflate(layoutInflater)
@@ -30,8 +31,17 @@ class EnigmaMainActivity : AppCompatActivity() {
         setupViews()
         setupRenderer()
         lifecycle.addObserver(sounds)
-        SoundEffects.lifecycle = lifecycle
         SoundEffects.initialize(context = applicationContext)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        viewModel.handleEvent(EnigmaEvent.RestoreState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        viewModel.handleEvent(EnigmaEvent.SaveState)
+        super.onSaveInstanceState(outState)
     }
 
     private fun setupRenderer() {
@@ -167,7 +177,7 @@ class EnigmaMainActivity : AppCompatActivity() {
                                 SoundEffects.playSound(sound = EnigmaSounds.KEY)
                                 viewModel.handleEvent(
                                     event = EnigmaEvent.InputKeyPressed(
-                                        input = letterToNumber(button.text[0])
+                                        input = button.text[0].letterToNumber()
                                     )
                                 )
                             }
@@ -178,7 +188,7 @@ class EnigmaMainActivity : AppCompatActivity() {
                         if ((button.id != R.id.button_delete) && (button.id !=R.id.button_spacebar)) {
                             viewModel.handleEvent(
                                 EnigmaEvent.InputKeyLifted(
-                                    input = letterToNumber(button.text[0])
+                                    input = button.text[0].letterToNumber()
                                 )
                             )
                         }
@@ -189,6 +199,6 @@ class EnigmaMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun letterToNumber(letter: Char) = letter.code - 65
+    private fun Char.letterToNumber() = this.code - 65
 
 }

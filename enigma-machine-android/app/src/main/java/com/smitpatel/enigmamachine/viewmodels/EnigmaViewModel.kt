@@ -1,15 +1,19 @@
 package com.smitpatel.enigmamachine.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.smitpatel.enigmamachine.events.EnigmaEvent
+import com.smitpatel.enigmamachine.models.EnigmaHistoryItem
 import com.smitpatel.enigmamachine.models.EnigmaModel
 import com.smitpatel.enigmamachine.models.Rotor
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.ui.main.EnigmaUiState
+import java.util.Stack
 
-class EnigmaViewModel : ViewModel() {
+class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
 
     private val enigma: EnigmaModel = EnigmaModel
 
@@ -43,18 +47,20 @@ class EnigmaViewModel : ViewModel() {
                     rotorOnePosition = enigma.rotorOne.position,
                     rotorTwoPosition = enigma.rotorTwo.position,
                     rotorThreePosition = enigma.rotorThree.position,
-                    rawMessage = enigmaUiState.value?.rawMessage + numberToLetter(event.input),
-                    encodedMessage =  enigmaUiState.value?.encodedMessage + numberToLetter(encodedLetter),
+                    rawMessage = enigmaUiState.value?.rawMessage + event.input.numberToLetter(),
+                    encodedMessage =  enigmaUiState.value?.encodedMessage + encodedLetter.numberToLetter(),
                     activeLampboard = encodedLetter,
                 )
             }
             is EnigmaEvent.InputKeyLifted -> enigmaUiState.value = enigmaUiState.value?.copy(
                 activeLampboard = -1
             )
-            is EnigmaEvent.InputSpacePressed -> enigmaUiState.value = enigmaUiState.value?.copy(
-                rawMessage = enigmaUiState.value?.rawMessage + space,
-                encodedMessage = enigmaUiState.value?.encodedMessage + space,
-            )
+            is EnigmaEvent.InputSpacePressed -> {
+                enigmaUiState.value = enigmaUiState.value?.copy(
+                    rawMessage = enigmaUiState.value?.rawMessage + space,
+                    encodedMessage = enigmaUiState.value?.encodedMessage + space,
+                )
+            }
             is EnigmaEvent.InputDeletePressed -> {
                 when(enigmaUiState.value?.rawMessage?.lastOrNull()) {
                     null -> {}
@@ -148,8 +154,49 @@ class EnigmaViewModel : ViewModel() {
             is EnigmaEvent.ToastMessageDisplayed -> enigmaUiState.value = enigmaUiState.value?.copy(
                 showSettingsChangedToast = false,
             )
+            is EnigmaEvent.SaveState -> {
+                Log.d("SMIT_", "Save State")
+                savedState[ENIGMA_SAVED_STATE_SETTINGS] = enigma.getCurrentSettings()
+                savedState[ENIGMA_SAVED_STATE_HISTORY] = enigma.historyStack
+                enigmaUiState.value?.let {
+                    savedState[ENIGMA_SAVED_STATE_RAW_MESSAGE] = it.rawMessage
+                    savedState[ENIGMA_SAVED_STATE_ENCODED_MESSAGE] = it.encodedMessage
+                }
+            }
+            is EnigmaEvent.RestoreState -> {
+                Log.d("SMIT_", "Restoring State")
+                val settings: EnigmaHistoryItem? = savedState[ENIGMA_SAVED_STATE_SETTINGS]
+                val history: Stack<EnigmaHistoryItem>? = savedState[ENIGMA_SAVED_STATE_HISTORY]
+                val rawMessage: String? = savedState[ENIGMA_SAVED_STATE_RAW_MESSAGE]
+                val encodedMessage: String? = savedState[ENIGMA_SAVED_STATE_ENCODED_MESSAGE]
+                if (settings != null && history != null
+                    && rawMessage != null && encodedMessage != null) {
+                    enigmaUiState.value = enigmaUiState.value?.copy(
+                        rotorOnePosition = settings.rotorOnePosition,
+                        rotorTwoPosition = settings.rotorTwoPosition,
+                        rotorThreePosition = settings.rotorThreePosition,
+                        rotorOneLabel = settings.rotorOneOption,
+                        rotorTwoLabel = settings.rotorTwoOption,
+                        rotorThreeLabel = settings.rotorThreeOption,
+                        rawMessage = rawMessage,
+                        encodedMessage = encodedMessage
+                    )
+                }
+                savedState.remove<Array<EnigmaHistoryItem>>(ENIGMA_SAVED_STATE_SETTINGS)
+                savedState.remove<Stack<EnigmaHistoryItem>>(ENIGMA_SAVED_STATE_HISTORY)
+                savedState.remove<String>(ENIGMA_SAVED_STATE_RAW_MESSAGE)
+                savedState.remove<String>(ENIGMA_SAVED_STATE_ENCODED_MESSAGE)
+            }
         }
     }
 
-    private fun numberToLetter(number: Int) = Char(number + 65)
+    private companion object {
+        const val ENIGMA_SAVED_STATE_SETTINGS = "enigma_saved_state_settings"
+        const val ENIGMA_SAVED_STATE_HISTORY = "enigma_saved_state_history"
+        const val ENIGMA_SAVED_STATE_RAW_MESSAGE = "enigma_saved_state_raw_message"
+        const val ENIGMA_SAVED_STATE_ENCODED_MESSAGE = "enigma_saved_state_encoded_message"
+    }
+
+    private fun Int.numberToLetter() = Char(this + 65)
+
 }
