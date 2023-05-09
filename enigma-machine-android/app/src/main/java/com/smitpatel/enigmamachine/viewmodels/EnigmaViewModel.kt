@@ -1,6 +1,5 @@
 package com.smitpatel.enigmamachine.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -71,6 +70,10 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                         )
                     }
                     else -> {
+                        // This is to ensure the app doesn't crash if the stack is ever empty
+                        // This should not be called if the stack is maintained correctly
+                        if (enigma.historyStack.empty()) return
+
                         val lastSettings = enigma.historyStack.pop()
                         enigma.rotorOne = Rotor.makeRotor(
                             rotorOption = lastSettings.rotorOneOption,
@@ -194,22 +197,22 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                 clipboardCopyState = null,
             )
             is EnigmaEvent.SaveState -> {
-                Log.d("SMIT_", "Save State")
                 savedState[ENIGMA_SAVED_STATE_SETTINGS] = enigma.getCurrentSettings()
-                savedState[ENIGMA_SAVED_STATE_HISTORY] = enigma.historyStack
+                savedState[ENIGMA_SAVED_STATE_HISTORY] = enigma.historyStack.toArray()
                 enigmaUiState.value?.let {
                     savedState[ENIGMA_SAVED_STATE_RAW_MESSAGE] = it.rawMessage
                     savedState[ENIGMA_SAVED_STATE_ENCODED_MESSAGE] = it.encodedMessage
                 }
             }
             is EnigmaEvent.RestoreState -> {
-                Log.d("SMIT_", "Restoring State")
                 val settings: EnigmaHistoryItem? = savedState[ENIGMA_SAVED_STATE_SETTINGS]
-                val history: Stack<EnigmaHistoryItem>? = savedState[ENIGMA_SAVED_STATE_HISTORY]
+                val history: Array<Any>? = savedState[ENIGMA_SAVED_STATE_HISTORY]
                 val rawMessage: String? = savedState[ENIGMA_SAVED_STATE_RAW_MESSAGE]
                 val encodedMessage: String? = savedState[ENIGMA_SAVED_STATE_ENCODED_MESSAGE]
-                if (settings != null && history != null
-                    && rawMessage != null && encodedMessage != null) {
+                if (settings != null && history != null && rawMessage != null && encodedMessage != null) {
+                    enigma.historyStack.clear()
+                    // End of the history array is the top of the stack
+                    history.forEach { enigma.historyStack.push(it as EnigmaHistoryItem) }
                     enigmaUiState.value = enigmaUiState.value?.copy(
                         rotorOnePosition = settings.rotorOnePosition,
                         rotorTwoPosition = settings.rotorTwoPosition,
@@ -221,7 +224,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                         encodedMessage = encodedMessage
                     )
                 }
-                savedState.remove<Array<EnigmaHistoryItem>>(ENIGMA_SAVED_STATE_SETTINGS)
+                savedState.remove<EnigmaHistoryItem>(ENIGMA_SAVED_STATE_SETTINGS)
                 savedState.remove<Stack<EnigmaHistoryItem>>(ENIGMA_SAVED_STATE_HISTORY)
                 savedState.remove<String>(ENIGMA_SAVED_STATE_RAW_MESSAGE)
                 savedState.remove<String>(ENIGMA_SAVED_STATE_ENCODED_MESSAGE)

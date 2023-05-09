@@ -29,6 +29,8 @@ import com.smitpatel.enigmamachine.views.Plugboard
 
 class SettingsFragment : DialogFragment() {
 
+    // TODO Save state for fragment
+
     private var _binding: FragmentSettingsBinding? = null
 
     // Note: This property is only valid between onCreateView and onDestroyView.
@@ -326,7 +328,6 @@ class SettingsFragment : DialogFragment() {
             dialog?.dismiss()
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
