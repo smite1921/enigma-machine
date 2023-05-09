@@ -15,4 +15,7 @@ sealed class EnigmaEvent {
     object InputSpacePressed : EnigmaEvent()
     object InputDeletePressed : EnigmaEvent()
     object ToastMessageDisplayed : EnigmaEvent()
+    object CopyRawText : EnigmaEvent()
+    object CopyEncodedText : EnigmaEvent()
+    object CopySettings : EnigmaEvent()
 }

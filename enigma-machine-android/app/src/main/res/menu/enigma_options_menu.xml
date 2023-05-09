@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/copy_raw_text"
+        android:title="@string/menu_copy_raw_text"/>
+
+    <item
+        android:id="@+id/copy_encoded_text"
+        android:title="@string/menu_copy_encoded_text"/>
+
+    <item
+        android:id="@+id/copy_enigma_settings"
+        android:title="@string/menu_copy_enigma_settings"/>
+</menu>

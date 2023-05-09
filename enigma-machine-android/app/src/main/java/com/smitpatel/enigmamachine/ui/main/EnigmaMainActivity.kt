@@ -1,6 +1,11 @@
 package com.smitpatel.enigmamachine.ui.main
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.os.Build
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
@@ -12,6 +17,7 @@ import com.smitpatel.enigmamachine.ui.EnigmaSounds
 import com.smitpatel.enigmamachine.ui.SoundEffects
 import com.smitpatel.enigmamachine.ui.setting.SettingsFragment
 import com.smitpatel.enigmamachine.events.EnigmaEvent
+import com.smitpatel.enigmamachine.models.Reflector
 import com.smitpatel.enigmamachine.models.Rotor
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.viewmodels.EnigmaViewModel
@@ -45,13 +51,22 @@ class EnigmaMainActivity : AppCompatActivity() {
     }
 
     private fun setupRenderer() {
-        fun getRotorLabelText(rotor: Rotor.RotorOption) = when (rotor) {
-            Rotor.RotorOption.ROTOR_ONE -> "I"
-            Rotor.RotorOption.ROTOR_TWO -> "II"
-            Rotor.RotorOption.ROTOR_THREE -> "III"
-            Rotor.RotorOption.ROTOR_FOUR -> "IV"
-            Rotor.RotorOption.ROTOR_FIVE -> "V"
+        fun getRotorLabelText(rotor: Rotor.RotorOption): String {
+            val rotorOptions = resources.getStringArray(R.array.rotor_options)
+            return when (rotor) {
+                Rotor.RotorOption.ROTOR_ONE -> rotorOptions[0]
+                Rotor.RotorOption.ROTOR_TWO -> rotorOptions[1]
+                Rotor.RotorOption.ROTOR_THREE -> rotorOptions[2]
+                Rotor.RotorOption.ROTOR_FOUR -> rotorOptions[3]
+                Rotor.RotorOption.ROTOR_FIVE -> rotorOptions[4]
+            }
         }
+
+        fun showToast(text: String) {
+            Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
+            viewModel.handleEvent(EnigmaEvent.ToastMessageDisplayed)
+        }
+
         viewModel.uiState.observe(this) {
             binding.rotors.rotor1.value = it.rotorOnePosition + 1
             binding.rotors.rotor2.value = it.rotorTwoPosition + 1
@@ -87,15 +102,60 @@ class EnigmaMainActivity : AppCompatActivity() {
             }
 
             if (it.showSettingsChangedToast) {
-                Toast.makeText(
-                    applicationContext,
-                    resources.getString(R.string.settings_changed_toast_message),
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast(text = resources.getString(R.string.settings_changed_toast_message))
                 sounds.playSound(sound = EnigmaSounds.CHANGES)
                 viewModel.handleEvent(
                     event = EnigmaEvent.ToastMessageDisplayed
                 )
+            }
+
+            if (it.clipboardCopyState != null) {
+                val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                when (val settingsState = it.clipboardCopyState.settingsState) {
+                    null -> {
+                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
+                            "",
+                            it.clipboardCopyState.text,
+                        ))
+                    }
+                    else -> {
+
+                        fun getReflectorLabelText(reflector: Reflector) = when (reflector) {
+                            Reflector.REFLECTOR_UKW_A -> getString(R.string.reflector_a)
+                            Reflector.REFLECTOR_UKW_B -> getString(R.string.reflector_b)
+                            Reflector.REFLECTOR_UKW_C -> getString(R.string.reflector_c)
+                        }
+
+                        val rotorOptions = "${getRotorLabelText(settingsState.rotorOneLabel)} " +
+                                "${getRotorLabelText(settingsState.rotorTwoLabel)} " +
+                                getRotorLabelText(settingsState.rotorThreeLabel)
+
+                        val rotorPositions = "${settingsState.rotorOnePosition.numberToLetter()} " +
+                                "${settingsState.rotorTwoPosition.numberToLetter()} " +
+                                settingsState.rotorThreePosition.numberToLetter()
+
+                        val ringPositions = "${settingsState.rotorOneRing.numberToLetter()} " +
+                                "${settingsState.rotorTwoRing.numberToLetter()} " +
+                                settingsState.rotorThreeRing.numberToLetter()
+
+                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
+                            "",
+                            getString(R.string.copy_settings_text,
+                                rotorOptions,
+                                rotorPositions,
+                                ringPositions,
+                                getReflectorLabelText(settingsState.reflector),
+                                settingsState.plugboardPairs,
+                            )
+                        ))
+                    }
+                }
+
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+                    showToast(getString(R.string.text_copied_toast_message))
+                } else {
+                    viewModel.handleEvent(EnigmaEvent.ToastMessageDisplayed)
+                }
             }
         }
     }
@@ -140,6 +200,8 @@ class EnigmaMainActivity : AppCompatActivity() {
             SoundEffects.playSound(sound = EnigmaSounds.DEFAULT)
             SettingsFragment().show(supportFragmentManager, "")
         }
+
+        registerForContextMenu(binding.textboxes.textfields)
 
         val buttons = arrayOf(
             binding.keyboard.buttonA, binding.keyboard.buttonB, binding.keyboard.buttonC,
@@ -199,6 +261,35 @@ class EnigmaMainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menuInflater.inflate(R.menu.enigma_options_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.copy_raw_text -> {
+                viewModel.handleEvent(EnigmaEvent.CopyRawText)
+                true
+            }
+            R.id.copy_encoded_text -> {
+                viewModel.handleEvent(EnigmaEvent.CopyEncodedText)
+                true
+            }
+            R.id.copy_enigma_settings -> {
+                viewModel.handleEvent(EnigmaEvent.CopySettings)
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+
+
     private fun Char.letterToNumber() = this.code - 65
+
+    private fun Int.numberToLetter() = Char(this + 65)
 
 }
