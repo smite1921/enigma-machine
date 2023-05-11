@@ -1,6 +1,7 @@
 package com.smitpatel.enigmamachine.views
 
 import android.content.Context
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
@@ -9,6 +10,7 @@ import com.smitpatel.enigmamachine.R
 import com.smitpatel.enigmamachine.databinding.ViewPlugboardBinding
 import com.smitpatel.enigmamachine.ui.EnigmaSounds
 import com.smitpatel.enigmamachine.ui.SoundEffects
+import kotlinx.parcelize.Parcelize
 import java.util.Stack
 
 class Plugboard(
@@ -23,9 +25,9 @@ class Plugboard(
 
     private lateinit var binding: ViewPlugboardBinding
 
-    private val pairLookup : MutableMap<Int, Int> = mutableMapOf()
-    private val colorLookup : MutableMap<Int, Int> = mutableMapOf()
-    private val colorStack : Stack<Int> by lazy {
+    private var pairLookup : MutableMap<Int, Int> = mutableMapOf()
+    private var colorLookup : MutableMap<Int, Int> = mutableMapOf()
+    private var colorStack : Stack<Int> = run {
         val stack = Stack<Int>()
         stack.push(R.drawable.enigma_settings_plugboard_color13)
         stack.push(R.drawable.enigma_settings_plugboard_color12)
@@ -52,6 +54,36 @@ class Plugboard(
             binding.lampU, binding.lampV, binding.lampW, binding.lampX, binding.lampY,
             binding.lampZ,
         )
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        return when (val superState = super.onSaveInstanceState()) {
+            null -> null
+            else -> return PlugboardSaveState(superState, pairLookup, colorLookup, colorStack)
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        super.onRestoreInstanceState(state)
+        when (state) {
+            is PlugboardSaveState -> {
+                pairLookup = state.pairLookup
+                colorLookup = state.colorLookup
+                colorStack = state.colorStack
+                val colouredLamps = mutableSetOf<Int>()
+                pairLookup.forEach {
+                    val lampOne = findViewById<Button>(it.value)
+                    val lampTwo = findViewById<Button>(it.key)
+                    val lampColour = colorLookup[it.key]
+                    if (!colouredLamps.contains(it.value) && !colouredLamps.contains(it.key) && lampColour != null) {
+                        lampOne.setBackgroundResource(lampColour)
+                        lampTwo.setBackgroundResource(lampColour)
+                        colouredLamps.add(it.key)
+                        colouredLamps.add(it.value)
+                    }
+                }
+            }
+        }
     }
 
     init {
@@ -125,4 +157,12 @@ class Plugboard(
 
     private fun Button.setDefaultBackground() =
         this.setBackgroundResource(R.drawable.enigma_settings_plugboard_default)
+
+    @Parcelize
+    private data class PlugboardSaveState(
+        val ss : Parcelable,
+        val pairLookup : MutableMap<Int, Int>,
+        val colorLookup : MutableMap<Int, Int>,
+        val colorStack : Stack<Int>,
+    ) : BaseSavedState(ss)
 }

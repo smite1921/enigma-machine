@@ -15,6 +15,4 @@ sealed class SettingEvent {
     data class MuteSwitchToggled(val muteStatus : Boolean) : SettingEvent()
     data class PlugboardPairAdded(val pair: Pair<Int, Int>) : SettingEvent()
     data class PlugboardPairRemoved(val pair: Pair<Int, Int>) : SettingEvent()
-    object SaveState : SettingEvent()
-    object RestoreState : SettingEvent()
 }

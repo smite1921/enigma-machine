@@ -103,6 +103,9 @@ object EnigmaModel {
         historyStack.addHistoryItem()
     }
 
+    /**
+     * Returns the current settings
+     */
     fun getCurrentSettings() : EnigmaHistoryItem =
         EnigmaHistoryItem(
             rotorOneOption = rotorOne.rotorOption,
@@ -117,6 +120,43 @@ object EnigmaModel {
             reflectorOption = reflector,
             plugboardPairs = plugboard.getAllPairs()
         )
+
+    /**
+     * Applies the settings given
+     */
+    fun applySettings(settings: EnigmaHistoryItem, historyStack: List<EnigmaHistoryItem>? = null) {
+        if (historyStack != null) {
+            this.historyStack.clear()
+            historyStack.forEach { this.historyStack.push(it) }
+        }
+
+        rotorOne = Rotor.makeRotor(
+            rotorOption = settings.rotorOneOption,
+            position = settings.rotorOnePosition,
+            ring = settings.rotorOnePosition,
+        )
+
+        rotorTwo = Rotor.makeRotor(
+            rotorOption = settings.rotorTwoOption,
+            position = settings.rotorTwoPosition,
+            ring = settings.rotorTwoPosition,
+        )
+
+        rotorThree = Rotor.makeRotor(
+            rotorOption = settings.rotorThreeOption,
+            position = settings.rotorThreePosition,
+            ring = settings.rotorThreePosition,
+        )
+
+        reflector = settings.reflectorOption
+
+        settings.plugboardPairs.forEach {
+            plugboard.addPair(
+                letterOne = it.first,
+                letterTwo = it.second,
+            )
+        }
+    }
 
     private fun Stack<EnigmaHistoryItem>.addHistoryItem() {
         this.push(

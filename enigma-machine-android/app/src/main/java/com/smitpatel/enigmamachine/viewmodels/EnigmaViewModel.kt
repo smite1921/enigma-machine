@@ -210,18 +210,19 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                 val rawMessage: String? = savedState[ENIGMA_SAVED_STATE_RAW_MESSAGE]
                 val encodedMessage: String? = savedState[ENIGMA_SAVED_STATE_ENCODED_MESSAGE]
                 if (settings != null && history != null && rawMessage != null && encodedMessage != null) {
-                    enigma.historyStack.clear()
-                    // End of the history array is the top of the stack
-                    history.forEach { enigma.historyStack.push(it as EnigmaHistoryItem) }
+                    enigma.applySettings(
+                        settings = settings,
+                        historyStack = history.map { it as EnigmaHistoryItem }
+                    )
                     enigmaUiState.value = enigmaUiState.value?.copy(
-                        rotorOnePosition = settings.rotorOnePosition,
-                        rotorTwoPosition = settings.rotorTwoPosition,
-                        rotorThreePosition = settings.rotorThreePosition,
-                        rotorOneLabel = settings.rotorOneOption,
-                        rotorTwoLabel = settings.rotorTwoOption,
-                        rotorThreeLabel = settings.rotorThreeOption,
+                        rotorOnePosition = enigma.rotorOne.position,
+                        rotorTwoPosition = enigma.rotorTwo.position,
+                        rotorThreePosition = enigma.rotorThree.position,
+                        rotorOneLabel = enigma.rotorOne.rotorOption,
+                        rotorTwoLabel = enigma.rotorTwo.rotorOption,
+                        rotorThreeLabel = enigma.rotorThree.rotorOption,
                         rawMessage = rawMessage,
-                        encodedMessage = encodedMessage
+                        encodedMessage = encodedMessage,
                     )
                 }
                 savedState.remove<EnigmaHistoryItem>(ENIGMA_SAVED_STATE_SETTINGS)
