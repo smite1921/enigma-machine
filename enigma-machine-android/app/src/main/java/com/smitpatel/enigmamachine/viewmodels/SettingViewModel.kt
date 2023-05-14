@@ -81,6 +81,12 @@ class SettingViewModel : ViewModel() {
                 letter = event.pair.first,
             )
             is SettingEvent.MuteSwitchToggled -> SoundEffects.isMuteOn = event.muteStatus
+
+            // TODO Currently when the state is restored we rely on the saved state of views to be
+            // correct. We do not manually update the state with the state we get from the activity
+            // It is possible that this may cause a difference between the actual ui state and the
+            // state we have. I have not seen this bug occur, but maybe we should consider forcing
+            // a state update.
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.smitpatel.enigmamachine.R
 
+// TODO: Make Sound Effects independent of the phone mode i.e (vibrate, silent, ring).
 object SoundEffects : DefaultLifecycleObserver {
 
     private const val ENIGMA_SOUND_PREFERENCES = "enigma_sound_preferences"
