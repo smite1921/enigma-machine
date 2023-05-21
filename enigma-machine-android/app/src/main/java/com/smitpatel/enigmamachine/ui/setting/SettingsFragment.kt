@@ -1,5 +1,7 @@
 package com.smitpatel.enigmamachine.ui.setting
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -92,6 +94,10 @@ class SettingsFragment : DialogFragment() {
 
     private val plugboard : Plugboard by lazy {
         binding.plugboard
+    }
+
+    private val instructionButton : Button by lazy {
+        binding.instructions
     }
 
     private val closeButton : Button by lazy {
@@ -316,6 +322,15 @@ class SettingsFragment : DialogFragment() {
                 ringTwoSpinner.adapter = adapter
                 ringThreeSpinner.adapter = adapter
             }
+        }
+
+        instructionButton.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://smite1921.github.io/enigma-machine/encode-decode/")
+                )
+            )
         }
 
         closeButton.setOnClickListener {
