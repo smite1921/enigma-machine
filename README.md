@@ -15,6 +15,7 @@ The Enigma Machine is a physical cryptographic device that was used extensively 
 The app is available for download through Google Play Store. If the Play Store is unavailable, an APK can be generated through Android Studio or Gradle.
 
 ## Guide
+>Note: For up to date instructions, please visit: https://smite1921.github.io/enigma-machine/
 
 ### Home Screen
 <img src="https://user-images.githubusercontent.com/43019533/95944617-9631ff00-0db6-11eb-832c-f75684c3d60e.png" align="right" width=22%/>
