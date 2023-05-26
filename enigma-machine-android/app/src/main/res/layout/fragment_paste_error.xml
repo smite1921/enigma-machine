@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:elevation="20dp"
+    tools:context=".ui.paste_error.PasteErrorFragment">
+
+    <View
+        android:id="@+id/resolve_paste_top_banner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/pasteErrorPrimaryColor"
+        app:layout_constraintDimensionRatio="4:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/resolve_paste_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/resolve_paste_title"
+        android:textColor="#ffffff"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/resolve_paste_top_banner"
+        app:layout_constraintEnd_toEndOf="@+id/resolve_paste_top_banner"
+        app:layout_constraintStart_toStartOf="@+id/resolve_paste_top_banner"
+        app:layout_constraintTop_toTopOf="@+id/resolve_paste_top_banner" />
+
+    <TextView
+        android:id="@+id/resolve_paste_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/resolve_paste_description"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/resolve_paste_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resolve_paste_top_banner"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/resolve_paste_text"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/close_paste"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resolve_paste_description" />
+
+    <Button
+        android:id="@+id/close_paste"
+        style="@android:style/Widget.Material.Button.Borderless.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/close_button"
+        android:textColor="@color/settingsAccentColor"
+        app:layout_constraintBottom_toBottomOf="@+id/submit_paste"
+        app:layout_constraintEnd_toStartOf="@+id/submit_paste"
+        app:layout_constraintTop_toTopOf="@+id/submit_paste" />
+
+    <Button
+        android:id="@+id/submit_paste"
+        style="@android:style/Widget.Material.Button.Borderless.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_button"
+        android:textColor="@color/settingsAccentColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

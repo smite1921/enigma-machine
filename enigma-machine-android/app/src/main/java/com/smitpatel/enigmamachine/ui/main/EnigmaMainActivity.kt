@@ -4,10 +4,12 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import android.widget.HorizontalScrollView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,9 +19,12 @@ import com.smitpatel.enigmamachine.ui.EnigmaSounds
 import com.smitpatel.enigmamachine.ui.SoundEffects
 import com.smitpatel.enigmamachine.ui.setting.SettingsFragment
 import com.smitpatel.enigmamachine.events.EnigmaEvent
+import com.smitpatel.enigmamachine.letterToNumber
 import com.smitpatel.enigmamachine.models.Reflector
 import com.smitpatel.enigmamachine.models.Rotor
+import com.smitpatel.enigmamachine.numberToLetter
 import com.smitpatel.enigmamachine.ui.RotorPosition
+import com.smitpatel.enigmamachine.ui.paste_error.PasteErrorFragment
 import com.smitpatel.enigmamachine.viewmodels.EnigmaViewModel
 
 class EnigmaMainActivity : AppCompatActivity() {
@@ -79,7 +84,7 @@ class EnigmaMainActivity : AppCompatActivity() {
             binding.textboxes.textRaw.text = it.rawMessage
             binding.textboxes.textCode.text = it.encodedMessage
 
-            binding.textboxes.scrollview.fullScroll(View.FOCUS_RIGHT)
+            binding.textboxes.scrollview.scrollToRight()
 
             val lamps = arrayOf(
                 binding.lampboard.lampA, binding.lampboard.lampB,
@@ -156,6 +161,19 @@ class EnigmaMainActivity : AppCompatActivity() {
                 } else {
                     viewModel.handleEvent(EnigmaEvent.ToastMessageDisplayed)
                 }
+            }
+
+            if (it.pasteError != null) {
+                PasteErrorFragment(
+                    pasteString = it.pasteError,
+                    onCloseClick = {
+                        viewModel.handleEvent(EnigmaEvent.ClosePasteError)
+                    },
+                    onSubmitClick = { newPasteText ->
+                        viewModel.handleEvent(EnigmaEvent.ClosePasteError)
+                        viewModel.handleEvent(EnigmaEvent.PasteRawText(rawText = newPasteText))
+                    }
+                ).show(supportFragmentManager, "")
             }
         }
     }
@@ -284,12 +302,24 @@ class EnigmaMainActivity : AppCompatActivity() {
                 viewModel.handleEvent(EnigmaEvent.CopySettings)
                 true
             }
+            R.id.paste_raw_text -> {
+                val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clipboardText = clipboardManager.primaryClip?.getItemAt(0)?.text
+                if (!clipboardText.isNullOrEmpty()) {
+                    viewModel.handleEvent(EnigmaEvent.PasteRawText(rawText = clipboardText.toString()))
+                }
+                true
+            }
             else -> super.onContextItemSelected(item)
         }
 
-
-    private fun Char.letterToNumber() = this.code - 65
-
-    private fun Int.numberToLetter() = Char(this + 65)
+    // TODO Need to figure out how to fix this scroll issue
+    private fun HorizontalScrollView.scrollToRight() {
+        // Flickering effect when using this method
+        post {
+            val maxScrollX = getChildAt(0).measuredWidth - measuredWidth
+            smoothScrollTo(maxScrollX, 0)
+        }
+    }
 
 }

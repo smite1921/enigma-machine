@@ -3,7 +3,6 @@ package com.smitpatel.enigmamachine.ui.setting
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ import com.smitpatel.enigmamachine.databinding.FragmentSettingsBinding
 import com.smitpatel.enigmamachine.events.EnigmaEvent
 import com.smitpatel.enigmamachine.models.Reflector
 import com.smitpatel.enigmamachine.models.Rotor
-import com.smitpatel.enigmamachine.ui.SoundEffects
 import com.smitpatel.enigmamachine.events.SettingEvent
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.viewmodels.EnigmaViewModel

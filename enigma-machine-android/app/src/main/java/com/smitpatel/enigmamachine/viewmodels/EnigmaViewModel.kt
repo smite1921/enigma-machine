@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.smitpatel.enigmamachine.events.EnigmaEvent
+import com.smitpatel.enigmamachine.letterToNumber
 import com.smitpatel.enigmamachine.models.EnigmaHistoryItem
 import com.smitpatel.enigmamachine.models.EnigmaModel
 import com.smitpatel.enigmamachine.models.Rotor
+import com.smitpatel.enigmamachine.numberToLetter
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.ui.main.ClipboardCopyState
 import com.smitpatel.enigmamachine.ui.main.EnigmaUiState
@@ -30,6 +32,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
             activeLampboard = -1,
             clipboardCopyState = null,
             showSettingsChangedToast = false,
+            pasteError = null,
         )
     )
 
@@ -74,6 +77,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                         // This should not be called if the stack is maintained correctly
                         if (enigma.historyStack.empty()) return
 
+                        // TODO use the applySettings function for this
                         val lastSettings = enigma.historyStack.pop()
                         enigma.rotorOne = Rotor.makeRotor(
                             rotorOption = lastSettings.rotorOneOption,
@@ -110,6 +114,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                                 activeLampboard = -1,
                                 clipboardCopyState = null,
                                 showSettingsChangedToast = false,
+                                pasteError = null,
                             )
                         }
                     }
@@ -153,6 +158,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                             activeLampboard = -1,
                             clipboardCopyState = null,
                             showSettingsChangedToast = true,
+                            pasteError = null,
                         )
                 }
             }
@@ -191,6 +197,42 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                         ),
                     )
                 )
+            }
+            is EnigmaEvent.ClosePasteError -> enigmaUiState.value = enigmaUiState.value?.copy(
+                pasteError = null
+            )
+            is EnigmaEvent.PasteRawText -> {
+                fun containsOnlyLettersSpacesAndUnderscores(input: String) =
+                    Regex("[a-zA-Z_\\s]*").matches(input)
+
+                when (containsOnlyLettersSpacesAndUnderscores(event.rawText)) {
+                    true -> {
+                        val rawText = event.rawText.uppercase().replace(
+                            regex = Regex("\\s"),
+                            replacement = "_"
+                        )
+                        var encodedText = ""
+                        rawText.forEach {
+                            encodedText += when (it) {
+                                '_' -> "_"
+                                else -> enigma.input(letter = it.letterToNumber()).numberToLetter()
+                            }
+                        }
+                        enigmaUiState.value = enigmaUiState.value?.copy(
+                            rotorOnePosition = enigma.rotorOne.position,
+                            rotorTwoPosition = enigma.rotorTwo.position,
+                            rotorThreePosition = enigma.rotorThree.position,
+                            rawMessage = enigmaUiState.value?.rawMessage + rawText,
+                            encodedMessage =  enigmaUiState.value?.encodedMessage + encodedText,
+                        )
+                    }
+                    false -> {
+                        enigmaUiState.value = enigmaUiState.value?.copy(
+                            pasteError = event.rawText,
+                        )
+                    }
+                }
+
             }
             is EnigmaEvent.ToastMessageDisplayed -> enigmaUiState.value = enigmaUiState.value?.copy(
                 showSettingsChangedToast = false,
@@ -239,8 +281,6 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
         const val ENIGMA_SAVED_STATE_RAW_MESSAGE = "enigma_saved_state_raw_message"
         const val ENIGMA_SAVED_STATE_ENCODED_MESSAGE = "enigma_saved_state_encoded_message"
     }
-
-    private fun Int.numberToLetter() = Char(this + 65)
 
     private fun String.formatCopy() = this.replace(oldChar = space, newChar = ' ')
 

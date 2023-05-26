@@ -11,6 +11,8 @@
     <color name="settingsPrimaryColor">#689e38</color>
     <color name="settingsAccentColor">#f94080</color>
 
+    <color name="pasteErrorPrimaryColor">#E61919</color>
+
     <color name="plugboardColor1">#e6194B</color>
     <color name="plugboardColor2">#3cb44b</color>
     <color name="plugboardColor3">#ffe119</color>

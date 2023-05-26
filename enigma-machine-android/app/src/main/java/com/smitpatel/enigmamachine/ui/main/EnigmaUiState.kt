@@ -15,6 +15,7 @@ data class EnigmaUiState(
     val encodedMessage: String,
     val clipboardCopyState: ClipboardCopyState?,
     val showSettingsChangedToast: Boolean,
+    val pasteError: String?,
 )
 
 data class ClipboardCopyState(
