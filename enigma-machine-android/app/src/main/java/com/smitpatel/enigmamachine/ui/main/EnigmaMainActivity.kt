@@ -4,12 +4,10 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
-import android.widget.HorizontalScrollView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -81,10 +79,11 @@ class EnigmaMainActivity : AppCompatActivity() {
             binding.rotors.rotor2Label.text = getRotorLabelText(it.rotorTwoLabel)
             binding.rotors.rotor3Label.text = getRotorLabelText(it.rotorThreeLabel)
 
-            binding.textboxes.textRaw.text = it.rawMessage
-            binding.textboxes.textCode.text = it.encodedMessage
+            binding.textboxes.textRaw.setText(it.rawMessage)
+            binding.textboxes.textCode.setText(it.encodedMessage)
 
-            binding.textboxes.scrollview.scrollToRight()
+            binding.textboxes.textRaw.setSelection(it.rawMessage.length)
+            binding.textboxes.textCode.setSelection(it.encodedMessage.length)
 
             val lamps = arrayOf(
                 binding.lampboard.lampA, binding.lampboard.lampB,
@@ -143,6 +142,13 @@ class EnigmaMainActivity : AppCompatActivity() {
                                 "${settingsState.rotorTwoRing.numberToLetter()} " +
                                 settingsState.rotorThreeRing.numberToLetter()
 
+                        val plugboardPairs = settingsState.plugboardPairs.map { plugboardPair ->
+                            Pair(
+                                first = plugboardPair.first.numberToLetter(),
+                                second = plugboardPair.second.numberToLetter()
+                            )
+                        }
+
                         clipboardManager.setPrimaryClip(ClipData.newPlainText(
                             "",
                             getString(R.string.copy_settings_text,
@@ -150,7 +156,7 @@ class EnigmaMainActivity : AppCompatActivity() {
                                 rotorPositions,
                                 ringPositions,
                                 getReflectorLabelText(settingsState.reflector),
-                                settingsState.plugboardPairs,
+                                plugboardPairs,
                             )
                         ))
                     }
@@ -246,6 +252,7 @@ class EnigmaMainActivity : AppCompatActivity() {
                                 viewModel.handleEvent(
                                     event = EnigmaEvent.InputDeletePressed
                                 )
+                                return@setOnTouchListener false
                             }
                             R.id.button_spacebar -> {
                                 SoundEffects.playSound(sound = EnigmaSounds.SPACE)
@@ -277,6 +284,17 @@ class EnigmaMainActivity : AppCompatActivity() {
                 true
             }
         }
+
+        binding.keyboard.buttonDelete.setOnLongClickListener {
+            viewModel.handleEvent(EnigmaEvent.InputLongDeletePressed)
+            true
+        }
+
+        binding.textboxes.textRaw.showSoftInputOnFocus = false
+        binding.textboxes.textCode.showSoftInputOnFocus = false
+
+        binding.textboxes.textRaw.requestFocus()
+        binding.textboxes.textRaw.requestFocus()
     }
 
     override fun onCreateContextMenu(
@@ -312,14 +330,5 @@ class EnigmaMainActivity : AppCompatActivity() {
             }
             else -> super.onContextItemSelected(item)
         }
-
-    // TODO Need to figure out how to fix this scroll issue
-    private fun HorizontalScrollView.scrollToRight() {
-        // Flickering effect when using this method
-        post {
-            val maxScrollX = getChildAt(0).measuredWidth - measuredWidth
-            smoothScrollTo(maxScrollX, 0)
-        }
-    }
 
 }

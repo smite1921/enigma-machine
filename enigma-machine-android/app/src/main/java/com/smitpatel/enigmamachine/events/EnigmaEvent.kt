@@ -13,6 +13,7 @@ sealed class EnigmaEvent {
     data class PasteRawText(val rawText: String) : EnigmaEvent()
     object InputSpacePressed : EnigmaEvent()
     object InputDeletePressed : EnigmaEvent()
+    object InputLongDeletePressed : EnigmaEvent()
     object ToastMessageDisplayed : EnigmaEvent()
     object CopyRawText : EnigmaEvent()
     object CopyEncodedText : EnigmaEvent()

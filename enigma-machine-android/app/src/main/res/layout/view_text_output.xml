@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,27 +27,35 @@
             android:orientation="vertical"
             android:weightSum="2">
 
-            <TextView
+            <EditText
                 android:id="@+id/text_raw"
+                android:background="@color/transparent"
+                android:cursorVisible="false"
+                android:maxLines="1"
+                android:autofillHints="false"
+                android:inputType="textNoSuggestions"
                 android:textIsSelectable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:fontFamily="serif-monospace"
-                android:gravity="center_vertical"
-                android:maxLines="1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <EditText
                 android:id="@+id/text_code"
+                android:background="@color/transparent"
+                android:cursorVisible="false"
+                android:maxLines="1"
+                android:autofillHints="false"
+                android:inputType="textNoSuggestions"
                 android:textIsSelectable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:fontFamily="serif-monospace"
-                android:gravity="center_vertical"
-                android:maxLines="1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 

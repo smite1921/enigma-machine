@@ -8,7 +8,6 @@ import com.smitpatel.enigmamachine.events.EnigmaEvent
 import com.smitpatel.enigmamachine.letterToNumber
 import com.smitpatel.enigmamachine.models.EnigmaHistoryItem
 import com.smitpatel.enigmamachine.models.EnigmaModel
-import com.smitpatel.enigmamachine.models.Rotor
 import com.smitpatel.enigmamachine.numberToLetter
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.ui.main.ClipboardCopyState
@@ -77,30 +76,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                         // This should not be called if the stack is maintained correctly
                         if (enigma.historyStack.empty()) return
 
-                        // TODO use the applySettings function for this
-                        val lastSettings = enigma.historyStack.pop()
-                        enigma.rotorOne = Rotor.makeRotor(
-                            rotorOption = lastSettings.rotorOneOption,
-                            position = lastSettings.rotorOnePosition,
-                            ring = lastSettings.ringOneOption
-                        )
-                        enigma.rotorTwo = Rotor.makeRotor(
-                            rotorOption = lastSettings.rotorTwoOption,
-                            position = lastSettings.rotorTwoPosition,
-                            ring = lastSettings.ringTwoOption
-                        )
-                        enigma.rotorThree = Rotor.makeRotor(
-                            rotorOption = lastSettings.rotorThreeOption,
-                            position = lastSettings.rotorThreePosition,
-                            ring = lastSettings.ringThreeOption
-                        )
-                        enigma.reflector = lastSettings.reflectorOption
-                        lastSettings.plugboardPairs.forEach {
-                            enigma.plugboard.addPair(
-                                letterOne = it.first,
-                                letterTwo = it.second,
-                            )
-                        }
+                        enigma.applySettings(settings = enigma.historyStack.pop())
                         enigmaUiState.value = enigmaUiState.value?.let {
                             EnigmaUiState(
                                 rotorOnePosition = enigma.rotorOne.position,
@@ -119,6 +95,33 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                         }
                     }
                 }
+            }
+            is EnigmaEvent.InputLongDeletePressed -> {
+                var firstItem: EnigmaHistoryItem? = null
+                val historyStackLength = enigma.historyStack.size
+
+                while (enigma.historyStack.isNotEmpty()) { firstItem = enigma.historyStack.pop() }
+
+                if (firstItem != null) {
+                    enigma.applySettings(settings = firstItem)
+                    enigmaUiState.value = enigmaUiState.value?.let {
+                        EnigmaUiState(
+                            rotorOnePosition = enigma.rotorOne.position,
+                            rotorTwoPosition = enigma.rotorTwo.position,
+                            rotorThreePosition = enigma.rotorThree.position,
+                            rotorOneLabel = enigma.rotorOne.rotorOption,
+                            rotorTwoLabel = enigma.rotorTwo.rotorOption,
+                            rotorThreeLabel = enigma.rotorThree.rotorOption,
+                            rawMessage = it.rawMessage.dropLast(historyStackLength),
+                            encodedMessage = it.encodedMessage.dropLast(historyStackLength),
+                            activeLampboard = -1,
+                            clipboardCopyState = null,
+                            showSettingsChangedToast = false,
+                            pasteError = null,
+                        )
+                    }
+                }
+
             }
             is EnigmaEvent.RotorStartPositionChanged -> {
                 when (event.rotorPosition) {
