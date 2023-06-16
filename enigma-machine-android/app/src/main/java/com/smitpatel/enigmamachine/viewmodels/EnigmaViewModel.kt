@@ -98,7 +98,6 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
             }
             is EnigmaEvent.InputLongDeletePressed -> {
                 var firstItem: EnigmaHistoryItem? = null
-                val historyStackLength = enigma.historyStack.size
 
                 while (enigma.historyStack.isNotEmpty()) { firstItem = enigma.historyStack.pop() }
 
@@ -112,8 +111,8 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                             rotorOneLabel = enigma.rotorOne.rotorOption,
                             rotorTwoLabel = enigma.rotorTwo.rotorOption,
                             rotorThreeLabel = enigma.rotorThree.rotorOption,
-                            rawMessage = it.rawMessage.dropLast(historyStackLength),
-                            encodedMessage = it.encodedMessage.dropLast(historyStackLength),
+                            rawMessage = "",
+                            encodedMessage = "",
                             activeLampboard = -1,
                             clipboardCopyState = null,
                             showSettingsChangedToast = false,
