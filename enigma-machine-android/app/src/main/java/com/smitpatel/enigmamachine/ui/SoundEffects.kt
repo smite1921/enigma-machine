@@ -7,8 +7,6 @@ import android.media.SoundPool
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.smitpatel.enigmamachine.R
-
-// TODO: Make Sound Effects independent of the phone mode i.e (vibrate, silent, ring).
 object SoundEffects : DefaultLifecycleObserver {
 
     private const val ENIGMA_SOUND_PREFERENCES = "enigma_sound_preferences"
@@ -40,26 +38,28 @@ object SoundEffects : DefaultLifecycleObserver {
 
         isMuteOn = sharedPreferences.getBoolean(ENIGMA_SOUND_MUTE,false)
 
-        val attributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
+        val attributes = AudioAttributes.Builder().run {
+            setUsage(AudioAttributes.USAGE_GAME)
+            setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            build()
+        }
 
-        soundPool = SoundPool.Builder()
-            .setAudioAttributes(attributes)
-            .setMaxStreams(7)
-            .build()
+        soundPool = SoundPool.Builder().run {
+            setAudioAttributes(attributes)
+            setMaxStreams(7)
+            build()
+        }
 
-        soundPool?.let {
-            defaultSoundId = it.load(context, R.raw.default_press, 1)
-            keySoundId = it.load(context, R.raw.key_press, 1)
-            spaceSoundId = it.load(context, R.raw.spacebar_press, 1)
-            deleteSoundId = it.load(context, R.raw.delete_sound, 1)
-            rotorSoundId = it.load(context, R.raw.rotor_shift, 1)
-            plugboardSoundId = it.load(context, R.raw.plug_press, 1)
-            changesMadeSoundId = it.load(context, R.raw.changes_sound, 1)
+        soundPool?.run {
+            defaultSoundId = load(context, R.raw.default_press, 1)
+            keySoundId = load(context, R.raw.key_press, 1)
+            spaceSoundId = load(context, R.raw.spacebar_press, 1)
+            deleteSoundId = load(context, R.raw.delete_sound, 1)
+            rotorSoundId = load(context, R.raw.rotor_shift, 1)
+            plugboardSoundId = load(context, R.raw.plug_press, 1)
+            changesMadeSoundId = load(context, R.raw.changes_sound, 1)
 
-            it.setOnLoadCompleteListener { _, sampleId, status ->
+            setOnLoadCompleteListener { _, sampleId, status ->
                 when {
                     (sampleId == defaultSoundId) && (status == 0) -> defaultSoundFlag = true
                     (sampleId == keySoundId) && (status == 0) -> keySoundFlag = true
