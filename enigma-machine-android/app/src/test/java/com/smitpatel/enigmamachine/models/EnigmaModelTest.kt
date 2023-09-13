@@ -4,6 +4,7 @@ import org.junit.After
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.util.Stack
 
 class EnigmaModelTest {
 
@@ -13,8 +14,35 @@ class EnigmaModelTest {
 
     private fun toIndex(letter: Char) = letter.uppercaseChar().code - 65
 
+    /**
+     * Sets the enigma machine to default settings
+     * Start: A A A
+     * Rotor: I II III
+     * Ring: A A A
+     * Reflector: UKW-B
+     * Plugboard Pairs: /
+     */
     @After
-    fun cleanUpEnigma() = enigma.setDefault()
+    fun cleanUpEnigma() {
+        EnigmaModel.rotorOne = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_ONE,
+            position = 0,
+            ring = 0,
+        )
+        EnigmaModel.rotorTwo = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_TWO,
+            position = 0,
+            ring = 0,
+        )
+        EnigmaModel.rotorThree = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_THREE,
+            position = 0,
+            ring = 0,
+        )
+        EnigmaModel.reflector = Reflector.REFLECTOR_UKW_B
+        EnigmaModel.plugboard.removeAllPairs()
+        EnigmaModel.historyStack.clear()
+    }
 
     @Test
     /**
@@ -255,6 +283,207 @@ class EnigmaModelTest {
             Triple(toIndex('B'), toIndex('F'), toIndex('Y')),
         )
         assertArrayEquals(expectedArr, enigmaPositionArr)
+    }
+
+    @Test
+    /**
+     * Testing history stack
+     * Start: X Y Z
+     * Rotor: V IV II
+     * Ring: S M I
+     * Reflector: UKW-C
+     * Plugboard Pairs: (AE) (DP)
+     */
+    fun testHistoryStack() {
+        enigma.rotorOne = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FIVE,
+        )
+        enigma.rotorTwo = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_FOUR,
+        )
+        enigma.rotorThree = Rotor.makeRotor(
+            rotorOption = Rotor.RotorOption.ROTOR_TWO,
+        )
+
+        enigma.reflector = Reflector.REFLECTOR_UKW_C
+
+        enigma.rotorOne.position = toIndex('X')
+        enigma.rotorTwo.position = toIndex('Y')
+        enigma.rotorThree.position = toIndex('Z')
+
+        enigma.rotorOne.ring = toIndex('S')
+        enigma.rotorTwo.ring = toIndex('M')
+        enigma.rotorThree.ring = toIndex('I')
+
+        enigma.plugboard.addPair(toIndex('A'), toIndex('E'))
+        enigma.plugboard.addPair(toIndex('D'), toIndex('P'))
+
+        val inputArr = toIndexArr("ABC")
+        enigma.input(inputArr)
+
+        val expectedHistoryStackItems = arrayOf(
+            EnigmaHistoryItem(
+                rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+                rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+                rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+                rotorOnePosition = toIndex('X'),
+                rotorTwoPosition = toIndex('Y'),
+                rotorThreePosition = toIndex('B'),
+                ringOneOption = toIndex('S'),
+                ringTwoOption = toIndex('M'),
+                ringThreeOption = toIndex('I'),
+                reflectorOption = Reflector.REFLECTOR_UKW_C,
+                plugboardPairs = setOf(
+                    Pair(toIndex('A'), toIndex('E')),
+                    Pair(toIndex('D'), toIndex('P')),
+                ),
+            ),
+            EnigmaHistoryItem(
+                rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+                rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+                rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+                rotorOnePosition = toIndex('X'),
+                rotorTwoPosition = toIndex('Y'),
+                rotorThreePosition = toIndex('A'),
+                ringOneOption = toIndex('S'),
+                ringTwoOption = toIndex('M'),
+                ringThreeOption = toIndex('I'),
+                reflectorOption = Reflector.REFLECTOR_UKW_C,
+                plugboardPairs = setOf(
+                    Pair(toIndex('A'), toIndex('E')),
+                    Pair(toIndex('D'), toIndex('P')),
+                ),
+            ),
+            EnigmaHistoryItem(
+                rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+                rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+                rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+                rotorOnePosition = toIndex('X'),
+                rotorTwoPosition = toIndex('Y'),
+                rotorThreePosition = toIndex('Z'),
+                ringOneOption = toIndex('S'),
+                ringTwoOption = toIndex('M'),
+                ringThreeOption = toIndex('I'),
+                reflectorOption = Reflector.REFLECTOR_UKW_C,
+                plugboardPairs = setOf(
+                    Pair(toIndex('A'), toIndex('E')),
+                    Pair(toIndex('D'), toIndex('P')),
+                ),
+            )
+        )
+
+        for (expectedHistoryItem in expectedHistoryStackItems) {
+            assertEquals(expectedHistoryItem, enigma.historyStack.pop())
+        }
+    }
+
+    @Test
+    /**
+     * Test the applySettings() function
+     */
+    fun testApplySettings() {
+        val newSettings = EnigmaHistoryItem(
+            rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+            rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+            rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+            rotorOnePosition = toIndex('X'),
+            rotorTwoPosition = toIndex('Y'),
+            rotorThreePosition = toIndex('B'),
+            ringOneOption = toIndex('S'),
+            ringTwoOption = toIndex('M'),
+            ringThreeOption = toIndex('I'),
+            reflectorOption = Reflector.REFLECTOR_UKW_C,
+            plugboardPairs = setOf(
+                Pair(toIndex('A'), toIndex('E')),
+                Pair(toIndex('D'), toIndex('P')),
+            ),
+        )
+        enigma.applySettings(settings = newSettings)
+        assertEquals(enigma.getCurrentSettings(), newSettings)
+        assertTrue(enigma.historyStack.empty())
+    }
+
+    @Test
+    /**
+     * Test the applySettings() function with history stack argument
+     */
+    fun testApplySettingsWithHistoryStack() {
+        val newSettings = EnigmaHistoryItem(
+            rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+            rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+            rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+            rotorOnePosition = toIndex('X'),
+            rotorTwoPosition = toIndex('Y'),
+            rotorThreePosition = toIndex('C'),
+            ringOneOption = toIndex('S'),
+            ringTwoOption = toIndex('M'),
+            ringThreeOption = toIndex('I'),
+            reflectorOption = Reflector.REFLECTOR_UKW_C,
+            plugboardPairs = setOf(
+                Pair(toIndex('A'), toIndex('E')),
+                Pair(toIndex('D'), toIndex('P')),
+            )
+        )
+        val newHistoryStack = listOf(
+            EnigmaHistoryItem(
+                rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+                rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+                rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+                rotorOnePosition = toIndex('X'),
+                rotorTwoPosition = toIndex('Y'),
+                rotorThreePosition = toIndex('Z'),
+                ringOneOption = toIndex('S'),
+                ringTwoOption = toIndex('M'),
+                ringThreeOption = toIndex('I'),
+                reflectorOption = Reflector.REFLECTOR_UKW_C,
+                plugboardPairs = setOf(
+                    Pair(toIndex('A'), toIndex('E')),
+                    Pair(toIndex('D'), toIndex('P')),
+                ),
+            ),
+            EnigmaHistoryItem(
+                rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+                rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+                rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+                rotorOnePosition = toIndex('X'),
+                rotorTwoPosition = toIndex('Y'),
+                rotorThreePosition = toIndex('A'),
+                ringOneOption = toIndex('S'),
+                ringTwoOption = toIndex('M'),
+                ringThreeOption = toIndex('I'),
+                reflectorOption = Reflector.REFLECTOR_UKW_C,
+                plugboardPairs = setOf(
+                    Pair(toIndex('A'), toIndex('E')),
+                    Pair(toIndex('D'), toIndex('P')),
+                ),
+            ),
+            EnigmaHistoryItem(
+                rotorOneOption = Rotor.RotorOption.ROTOR_FIVE,
+                rotorTwoOption = Rotor.RotorOption.ROTOR_FOUR,
+                rotorThreeOption = Rotor.RotorOption.ROTOR_TWO,
+                rotorOnePosition = toIndex('X'),
+                rotorTwoPosition = toIndex('Y'),
+                rotorThreePosition = toIndex('B'),
+                ringOneOption = toIndex('S'),
+                ringTwoOption = toIndex('M'),
+                ringThreeOption = toIndex('I'),
+                reflectorOption = Reflector.REFLECTOR_UKW_C,
+                plugboardPairs = setOf(
+                    Pair(toIndex('A'), toIndex('E')),
+                    Pair(toIndex('D'), toIndex('P')),
+                ),
+            ),
+        )
+
+        enigma.applySettings(settings = newSettings, historyStack = newHistoryStack)
+
+        val expectedHistoryStack = Stack<EnigmaHistoryItem>()
+        for (historyItem in newHistoryStack) {
+            expectedHistoryStack.push(historyItem)
+        }
+
+        assertEquals(newSettings, enigma.getCurrentSettings())
+        assertEquals(expectedHistoryStack, enigma.historyStack)
     }
 
 }

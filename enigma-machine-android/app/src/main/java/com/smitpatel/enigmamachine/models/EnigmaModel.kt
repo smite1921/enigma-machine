@@ -75,35 +75,6 @@ object EnigmaModel {
     fun input(letters: Array<Int>) = letters.map { input(it) }
 
     /**
-     * Sets the enigma machine to default settings
-     * Start: A A A
-     * Rotor: I II III
-     * Ring: A A A
-     * Reflector: UKW-B
-     * Plugboard Pairs: /
-     */
-    fun setDefault() {
-        rotorOne = Rotor.makeRotor(
-            rotorOption = Rotor.RotorOption.ROTOR_ONE,
-            position = 0,
-            ring = 0,
-        )
-        rotorTwo = Rotor.makeRotor(
-            rotorOption = Rotor.RotorOption.ROTOR_TWO,
-            position = 0,
-            ring = 0,
-        )
-        rotorThree = Rotor.makeRotor(
-            rotorOption = Rotor.RotorOption.ROTOR_THREE,
-            position = 0,
-            ring = 0,
-        )
-        reflector = Reflector.REFLECTOR_UKW_B
-        plugboard.removeAllPairs()
-        historyStack.addHistoryItem()
-    }
-
-    /**
      * Returns the current settings
      */
     fun getCurrentSettings() : EnigmaHistoryItem =
@@ -133,19 +104,19 @@ object EnigmaModel {
         rotorOne = Rotor.makeRotor(
             rotorOption = settings.rotorOneOption,
             position = settings.rotorOnePosition,
-            ring = settings.rotorOnePosition,
+            ring = settings.ringOneOption,
         )
 
         rotorTwo = Rotor.makeRotor(
             rotorOption = settings.rotorTwoOption,
             position = settings.rotorTwoPosition,
-            ring = settings.rotorTwoPosition,
+            ring = settings.ringTwoOption,
         )
 
         rotorThree = Rotor.makeRotor(
             rotorOption = settings.rotorThreeOption,
             position = settings.rotorThreePosition,
-            ring = settings.rotorThreePosition,
+            ring = settings.ringThreeOption,
         )
 
         reflector = settings.reflectorOption
