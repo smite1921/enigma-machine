@@ -15,4 +15,8 @@
     <item
         android:id="@+id/paste_raw_text"
         android:title="@string/menu_paste_raw_text"/>
+
+    <item
+        android:id="@+id/paste_enigma_settings"
+        android:title="@string/menu_paste_enigma_settings"/>
 </menu>

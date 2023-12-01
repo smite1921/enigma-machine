@@ -11,16 +11,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.smitpatel.enigmamachine.DeserializeException
 import com.smitpatel.enigmamachine.R
+import com.smitpatel.enigmamachine.Serializer
 import com.smitpatel.enigmamachine.databinding.ActivityEnigmaMainBinding
 import com.smitpatel.enigmamachine.ui.EnigmaSounds
 import com.smitpatel.enigmamachine.ui.SoundEffects
 import com.smitpatel.enigmamachine.ui.setting.SettingsFragment
 import com.smitpatel.enigmamachine.events.EnigmaEvent
 import com.smitpatel.enigmamachine.letterToNumber
-import com.smitpatel.enigmamachine.models.Reflector
-import com.smitpatel.enigmamachine.models.Rotor
-import com.smitpatel.enigmamachine.numberToLetter
+import com.smitpatel.enigmamachine.toRotorLabelText
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.ui.paste_error.PasteErrorFragment
 import com.smitpatel.enigmamachine.viewmodels.EnigmaViewModel
@@ -32,6 +32,8 @@ class EnigmaMainActivity : AppCompatActivity() {
     private val viewModel : EnigmaViewModel by viewModels()
 
     private val sounds : SoundEffects = SoundEffects
+
+    private val serializer : Serializer = Serializer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,16 +56,6 @@ class EnigmaMainActivity : AppCompatActivity() {
     }
 
     private fun setupRenderer() {
-        fun getRotorLabelText(rotor: Rotor.RotorOption): String {
-            val rotorOptions = resources.getStringArray(R.array.rotor_options)
-            return when (rotor) {
-                Rotor.RotorOption.ROTOR_ONE -> rotorOptions[0]
-                Rotor.RotorOption.ROTOR_TWO -> rotorOptions[1]
-                Rotor.RotorOption.ROTOR_THREE -> rotorOptions[2]
-                Rotor.RotorOption.ROTOR_FOUR -> rotorOptions[3]
-                Rotor.RotorOption.ROTOR_FIVE -> rotorOptions[4]
-            }
-        }
 
         fun showToast(text: String) {
             Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
@@ -75,9 +67,9 @@ class EnigmaMainActivity : AppCompatActivity() {
             binding.rotors.rotor2.value = it.rotorTwoPosition + 1
             binding.rotors.rotor3.value = it.rotorThreePosition + 1
 
-            binding.rotors.rotor1Label.text = getRotorLabelText(it.rotorOneLabel)
-            binding.rotors.rotor2Label.text = getRotorLabelText(it.rotorTwoLabel)
-            binding.rotors.rotor3Label.text = getRotorLabelText(it.rotorThreeLabel)
+            binding.rotors.rotor1Label.text = it.rotorOneLabel.toRotorLabelText(applicationContext)
+            binding.rotors.rotor2Label.text = it.rotorTwoLabel.toRotorLabelText(applicationContext)
+            binding.rotors.rotor3Label.text = it.rotorThreeLabel.toRotorLabelText(applicationContext)
 
             binding.textboxes.textRaw.setText(it.rawMessage)
             binding.textboxes.textCode.setText(it.encodedMessage)
@@ -113,53 +105,18 @@ class EnigmaMainActivity : AppCompatActivity() {
                 )
             }
 
+            if (it.showSettingsErrorToast) {
+                showToast(text = resources.getString(R.string.settings_not_changed_toast_message))
+                viewModel.handleEvent(
+                    event = EnigmaEvent.ToastMessageDisplayed
+                )
+            }
+
             if (it.clipboardCopyState != null) {
                 val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                 when (val settingsState = it.clipboardCopyState.settingsState) {
-                    null -> {
-                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
-                            "",
-                            it.clipboardCopyState.text,
-                        ))
-                    }
-                    else -> {
-
-                        fun getReflectorLabelText(reflector: Reflector) = when (reflector) {
-                            Reflector.REFLECTOR_UKW_A -> getString(R.string.reflector_a)
-                            Reflector.REFLECTOR_UKW_B -> getString(R.string.reflector_b)
-                            Reflector.REFLECTOR_UKW_C -> getString(R.string.reflector_c)
-                        }
-
-                        val rotorOptions = "${getRotorLabelText(settingsState.rotorOneLabel)} " +
-                                "${getRotorLabelText(settingsState.rotorTwoLabel)} " +
-                                getRotorLabelText(settingsState.rotorThreeLabel)
-
-                        val rotorPositions = "${settingsState.rotorOnePosition.numberToLetter()} " +
-                                "${settingsState.rotorTwoPosition.numberToLetter()} " +
-                                settingsState.rotorThreePosition.numberToLetter()
-
-                        val ringPositions = "${settingsState.rotorOneRing.numberToLetter()} " +
-                                "${settingsState.rotorTwoRing.numberToLetter()} " +
-                                settingsState.rotorThreeRing.numberToLetter()
-
-                        val plugboardPairs = settingsState.plugboardPairs.map { plugboardPair ->
-                            Pair(
-                                first = plugboardPair.first.numberToLetter(),
-                                second = plugboardPair.second.numberToLetter()
-                            )
-                        }
-
-                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
-                            "",
-                            getString(R.string.copy_settings_text,
-                                rotorOptions,
-                                rotorPositions,
-                                ringPositions,
-                                getReflectorLabelText(settingsState.reflector),
-                                plugboardPairs,
-                            )
-                        ))
-                    }
+                    null -> clipboardManager.setPrimaryClip(ClipData.newPlainText("", it.clipboardCopyState.text))
+                    else -> clipboardManager.setPrimaryClip(ClipData.newPlainText("", serializer.serializeJson(applicationContext, settingsState)))
                 }
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
@@ -325,6 +282,19 @@ class EnigmaMainActivity : AppCompatActivity() {
                 val clipboardText = clipboardManager.primaryClip?.getItemAt(0)?.text
                 if (!clipboardText.isNullOrEmpty()) {
                     viewModel.handleEvent(EnigmaEvent.PasteRawText(rawText = clipboardText.toString()))
+                }
+                true
+            }
+            R.id.paste_enigma_settings -> {
+                val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clipboardText = clipboardManager.primaryClip?.getItemAt(0)?.text
+                if (!clipboardText.isNullOrEmpty()) {
+                    try {
+                        val enigmaSettings = serializer.deserializeJson(applicationContext, clipboardText.toString())
+                        viewModel.handleEvent(EnigmaEvent.PasteEnigmaSettings(enigmaSettings))
+                    } catch (error: DeserializeException) {
+                        viewModel.handleEvent(EnigmaEvent.PasteEnigmaSettings(enigmaSettings = null))
+                    }
                 }
                 true
             }

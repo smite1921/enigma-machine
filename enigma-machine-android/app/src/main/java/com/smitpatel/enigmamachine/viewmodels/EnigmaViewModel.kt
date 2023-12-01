@@ -31,6 +31,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
             activeLampboard = -1,
             clipboardCopyState = null,
             showSettingsChangedToast = false,
+            showSettingsErrorToast = false,
             pasteError = null,
         )
     )
@@ -90,6 +91,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                                 activeLampboard = -1,
                                 clipboardCopyState = null,
                                 showSettingsChangedToast = false,
+                                showSettingsErrorToast = false,
                                 pasteError = null,
                             )
                         }
@@ -116,6 +118,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                             activeLampboard = -1,
                             clipboardCopyState = null,
                             showSettingsChangedToast = false,
+                            showSettingsErrorToast = false,
                             pasteError = null,
                         )
                     }
@@ -160,6 +163,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                             activeLampboard = -1,
                             clipboardCopyState = null,
                             showSettingsChangedToast = true,
+                            showSettingsErrorToast = false,
                             pasteError = null,
                         )
                 }
@@ -184,17 +188,17 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                 enigmaUiState.value = enigmaUiState.value?.copy(
                     clipboardCopyState = ClipboardCopyState(
                         text = "",
-                        settingsState = ClipboardCopyState.SettingsCopyState(
-                            rotorOneLabel = enigma.rotorOne.rotorOption,
-                            rotorTwoLabel = enigma.rotorTwo.rotorOption,
-                            rotorThreeLabel = enigma.rotorThree.rotorOption,
+                        settingsState = EnigmaHistoryItem(
+                            rotorOneOption = enigma.rotorOne.rotorOption,
+                            rotorTwoOption = enigma.rotorTwo.rotorOption,
+                            rotorThreeOption = enigma.rotorThree.rotorOption,
                             rotorOnePosition = enigma.rotorOne.position,
                             rotorTwoPosition = enigma.rotorTwo.position,
                             rotorThreePosition = enigma.rotorThree.position,
-                            rotorOneRing = enigma.rotorOne.ring,
-                            rotorTwoRing = enigma.rotorTwo.ring,
-                            rotorThreeRing = enigma.rotorThree.ring,
-                            reflector = enigma.reflector,
+                            ringOneOption = enigma.rotorOne.ring,
+                            ringTwoOption = enigma.rotorTwo.ring,
+                            ringThreeOption = enigma.rotorThree.ring,
+                            reflectorOption = enigma.reflector,
                             plugboardPairs = enigma.plugboard.getAllPairs()
                         ),
                     )
@@ -234,10 +238,37 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
                         )
                     }
                 }
+            }
+            is EnigmaEvent.PasteEnigmaSettings -> {
+                when (val enigmaSettings = event.enigmaSettings) {
+                    null -> enigmaUiState.value = enigmaUiState.value?.copy(showSettingsErrorToast = true)
+                    else -> {
+                        enigma.applySettings(
+                            settings = enigmaSettings,
+                            historyStack = emptyList()
+                        )
 
+                        enigmaUiState.value = enigmaUiState.value?.copy(
+                            rotorOnePosition = enigma.rotorOne.position,
+                            rotorTwoPosition = enigma.rotorTwo.position,
+                            rotorThreePosition = enigma.rotorThree.position,
+                            rotorOneLabel = enigma.rotorOne.rotorOption,
+                            rotorTwoLabel = enigma.rotorTwo.rotorOption,
+                            rotorThreeLabel = enigma.rotorThree.rotorOption,
+                            rawMessage = "",
+                            encodedMessage = "",
+                            activeLampboard = -1,
+                            clipboardCopyState = null,
+                            showSettingsChangedToast = true,
+                            pasteError = null,
+                        )
+
+                    }
+                }
             }
             is EnigmaEvent.ToastMessageDisplayed -> enigmaUiState.value = enigmaUiState.value?.copy(
                 showSettingsChangedToast = false,
+                showSettingsErrorToast = false,
                 clipboardCopyState = null,
             )
             is EnigmaEvent.SaveState -> {

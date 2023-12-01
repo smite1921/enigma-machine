@@ -50,15 +50,12 @@
 
     <string name="settings_changed_toast_message">New settings applied</string>
     <string name="text_copied_toast_message">Copied</string>
+    <string name="settings_not_changed_toast_message">Could not apply settings</string>
 
     <string name="menu_copy_raw_text">Copy raw text</string>
     <string name="menu_copy_encoded_text">Copy encoded text</string>
     <string name="menu_copy_enigma_settings">Copy enigma settings</string>
     <string name="menu_paste_raw_text">Paste raw text</string>
-
-
-    <string name="copy_settings_text">
-        Rotor options: %s, Rotor start: %s, Rings: %s, Reflector: %s, Plugboard pairs: %s
-    </string>
+    <string name="menu_paste_enigma_settings">Paste enigma settings</string>
 
 </resources>
