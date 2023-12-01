@@ -9,10 +9,19 @@
         android:title="@string/menu_copy_encoded_text"/>
 
     <item
-        android:id="@+id/copy_enigma_settings"
-        android:title="@string/menu_copy_enigma_settings"/>
+        android:id="@+id/copy_enigma_settings_text"
+        android:title="@string/menu_copy_enigma_settings_text"/>
+
+    <item
+        android:id="@+id/copy_enigma_settings_json"
+        android:title="@string/menu_copy_enigma_settings_json"/>
+
 
     <item
         android:id="@+id/paste_raw_text"
         android:title="@string/menu_paste_raw_text"/>
+
+    <item
+        android:id="@+id/paste_enigma_settings"
+        android:title="@string/menu_paste_enigma_settings"/>
 </menu>

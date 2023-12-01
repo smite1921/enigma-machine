@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -12,8 +13,8 @@ android {
         applicationId "com.smitpatel.enigmamachine"
         minSdk 21
         targetSdk 33
-        versionCode 10
-        versionName "2.0"
+        versionCode 12
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,6 +43,8 @@ dependencies {
     def lifecycle_version = "2.6.0-alpha02"
 
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
 
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")

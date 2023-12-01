@@ -24,6 +24,8 @@ import com.smitpatel.enigmamachine.numberToLetter
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.ui.paste_error.PasteErrorFragment
 import com.smitpatel.enigmamachine.viewmodels.EnigmaViewModel
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class EnigmaMainActivity : AppCompatActivity() {
 
@@ -113,13 +115,28 @@ class EnigmaMainActivity : AppCompatActivity() {
                 )
             }
 
+            if (it.showSettingsErrorToast) {
+                showToast(text = resources.getString(R.string.settings_not_changed_toast_message))
+                viewModel.handleEvent(
+                    event = EnigmaEvent.ToastMessageDisplayed
+                )
+            }
+
             if (it.clipboardCopyState != null) {
                 val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                when (val settingsState = it.clipboardCopyState.settingsState) {
-                    null -> {
+                val settingsState = it.clipboardCopyState.settingsState
+                val json = it.clipboardCopyState.json
+                when {
+                    settingsState == null -> {
                         clipboardManager.setPrimaryClip(ClipData.newPlainText(
                             "",
                             it.clipboardCopyState.text,
+                        ))
+                    }
+                    json -> {
+                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
+                            "",
+                            Json.encodeToString(settingsState)
                         ))
                     }
                     else -> {
@@ -316,8 +333,12 @@ class EnigmaMainActivity : AppCompatActivity() {
                 viewModel.handleEvent(EnigmaEvent.CopyEncodedText)
                 true
             }
-            R.id.copy_enigma_settings -> {
-                viewModel.handleEvent(EnigmaEvent.CopySettings)
+            R.id.copy_enigma_settings_text -> {
+                viewModel.handleEvent(EnigmaEvent.CopySettingsText)
+                true
+            }
+            R.id.copy_enigma_settings_json -> {
+                viewModel.handleEvent(EnigmaEvent.CopySettingsJson)
                 true
             }
             R.id.paste_raw_text -> {
@@ -325,6 +346,14 @@ class EnigmaMainActivity : AppCompatActivity() {
                 val clipboardText = clipboardManager.primaryClip?.getItemAt(0)?.text
                 if (!clipboardText.isNullOrEmpty()) {
                     viewModel.handleEvent(EnigmaEvent.PasteRawText(rawText = clipboardText.toString()))
+                }
+                true
+            }
+            R.id.paste_enigma_settings -> {
+                val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clipboardText = clipboardManager.primaryClip?.getItemAt(0)?.text
+                if (!clipboardText.isNullOrEmpty()) {
+                    viewModel.handleEvent(EnigmaEvent.PasteEnigmaSettings(rawText = clipboardText.toString()))
                 }
                 true
             }
