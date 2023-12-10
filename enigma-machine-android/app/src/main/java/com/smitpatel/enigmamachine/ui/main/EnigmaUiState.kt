@@ -2,7 +2,13 @@ package com.smitpatel.enigmamachine.ui.main
 
 import com.smitpatel.enigmamachine.models.Reflector
 import com.smitpatel.enigmamachine.models.Rotor
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.builtins.IntArraySerializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 data class EnigmaUiState(
     val rotorOnePosition: Int,
@@ -26,7 +32,6 @@ data class ClipboardCopyState(
     val json: Boolean,
 ) {
 
-    @Serializable
     data class SettingsCopyState(
         val rotorOneLabel: Rotor.RotorOption,
         val rotorTwoLabel: Rotor.RotorOption,

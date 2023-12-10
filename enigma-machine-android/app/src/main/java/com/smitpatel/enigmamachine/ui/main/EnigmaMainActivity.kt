@@ -17,15 +17,21 @@ import com.smitpatel.enigmamachine.ui.EnigmaSounds
 import com.smitpatel.enigmamachine.ui.SoundEffects
 import com.smitpatel.enigmamachine.ui.setting.SettingsFragment
 import com.smitpatel.enigmamachine.events.EnigmaEvent
+import com.smitpatel.enigmamachine.getRotorLabelText
 import com.smitpatel.enigmamachine.letterToNumber
-import com.smitpatel.enigmamachine.models.Reflector
+import com.smitpatel.enigmamachine.models.EnigmaHistoryItem
 import com.smitpatel.enigmamachine.models.Rotor
-import com.smitpatel.enigmamachine.numberToLetter
+import com.smitpatel.enigmamachine.toNumber
+import com.smitpatel.enigmamachine.toReflector
+import com.smitpatel.enigmamachine.toRotorOption
+import com.smitpatel.enigmamachine.toSettingsJson
+import com.smitpatel.enigmamachine.toSettingsString
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.ui.paste_error.PasteErrorFragment
 import com.smitpatel.enigmamachine.viewmodels.EnigmaViewModel
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import org.json.JSONObject
+import java.lang.Exception
+import java.util.Stack
 
 class EnigmaMainActivity : AppCompatActivity() {
 
@@ -56,16 +62,6 @@ class EnigmaMainActivity : AppCompatActivity() {
     }
 
     private fun setupRenderer() {
-        fun getRotorLabelText(rotor: Rotor.RotorOption): String {
-            val rotorOptions = resources.getStringArray(R.array.rotor_options)
-            return when (rotor) {
-                Rotor.RotorOption.ROTOR_ONE -> rotorOptions[0]
-                Rotor.RotorOption.ROTOR_TWO -> rotorOptions[1]
-                Rotor.RotorOption.ROTOR_THREE -> rotorOptions[2]
-                Rotor.RotorOption.ROTOR_FOUR -> rotorOptions[3]
-                Rotor.RotorOption.ROTOR_FIVE -> rotorOptions[4]
-            }
-        }
 
         fun showToast(text: String) {
             Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
@@ -77,9 +73,9 @@ class EnigmaMainActivity : AppCompatActivity() {
             binding.rotors.rotor2.value = it.rotorTwoPosition + 1
             binding.rotors.rotor3.value = it.rotorThreePosition + 1
 
-            binding.rotors.rotor1Label.text = getRotorLabelText(it.rotorOneLabel)
-            binding.rotors.rotor2Label.text = getRotorLabelText(it.rotorTwoLabel)
-            binding.rotors.rotor3Label.text = getRotorLabelText(it.rotorThreeLabel)
+            binding.rotors.rotor1Label.text = it.rotorOneLabel.getRotorLabelText(applicationContext)
+            binding.rotors.rotor2Label.text = it.rotorTwoLabel.getRotorLabelText(applicationContext)
+            binding.rotors.rotor3Label.text = it.rotorThreeLabel.getRotorLabelText(applicationContext)
 
             binding.textboxes.textRaw.setText(it.rawMessage)
             binding.textboxes.textCode.setText(it.encodedMessage)
@@ -127,56 +123,9 @@ class EnigmaMainActivity : AppCompatActivity() {
                 val settingsState = it.clipboardCopyState.settingsState
                 val json = it.clipboardCopyState.json
                 when {
-                    settingsState == null -> {
-                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
-                            "",
-                            it.clipboardCopyState.text,
-                        ))
-                    }
-                    json -> {
-                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
-                            "",
-                            Json.encodeToString(settingsState)
-                        ))
-                    }
-                    else -> {
-
-                        fun getReflectorLabelText(reflector: Reflector) = when (reflector) {
-                            Reflector.REFLECTOR_UKW_A -> getString(R.string.reflector_a)
-                            Reflector.REFLECTOR_UKW_B -> getString(R.string.reflector_b)
-                            Reflector.REFLECTOR_UKW_C -> getString(R.string.reflector_c)
-                        }
-
-                        val rotorOptions = "${getRotorLabelText(settingsState.rotorOneLabel)} " +
-                                "${getRotorLabelText(settingsState.rotorTwoLabel)} " +
-                                getRotorLabelText(settingsState.rotorThreeLabel)
-
-                        val rotorPositions = "${settingsState.rotorOnePosition.numberToLetter()} " +
-                                "${settingsState.rotorTwoPosition.numberToLetter()} " +
-                                settingsState.rotorThreePosition.numberToLetter()
-
-                        val ringPositions = "${settingsState.rotorOneRing.numberToLetter()} " +
-                                "${settingsState.rotorTwoRing.numberToLetter()} " +
-                                settingsState.rotorThreeRing.numberToLetter()
-
-                        val plugboardPairs = settingsState.plugboardPairs.map { plugboardPair ->
-                            Pair(
-                                first = plugboardPair.first.numberToLetter(),
-                                second = plugboardPair.second.numberToLetter()
-                            )
-                        }
-
-                        clipboardManager.setPrimaryClip(ClipData.newPlainText(
-                            "",
-                            getString(R.string.copy_settings_text,
-                                rotorOptions,
-                                rotorPositions,
-                                ringPositions,
-                                getReflectorLabelText(settingsState.reflector),
-                                plugboardPairs,
-                            )
-                        ))
-                    }
+                    settingsState == null -> clipboardManager.setPrimaryClip(ClipData.newPlainText("", it.clipboardCopyState.text))
+                    json -> clipboardManager.setPrimaryClip(ClipData.newPlainText("", settingsState.toSettingsJson(applicationContext)))
+                    else -> clipboardManager.setPrimaryClip(ClipData.newPlainText("", settingsState.toSettingsString(applicationContext)))
                 }
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
@@ -352,12 +301,62 @@ class EnigmaMainActivity : AppCompatActivity() {
             R.id.paste_enigma_settings -> {
                 val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                 val clipboardText = clipboardManager.primaryClip?.getItemAt(0)?.text
+
                 if (!clipboardText.isNullOrEmpty()) {
-                    viewModel.handleEvent(EnigmaEvent.PasteEnigmaSettings(rawText = clipboardText.toString()))
+
+                    try {
+                        val json = JSONObject(clipboardText.toString())
+
+                        val jsonRotorOptions = json.getJSONArray("rotorOptions")
+                        val rotorOptions = (0 until jsonRotorOptions.length()).map {
+                            jsonRotorOptions.getString(it).toRotorOption(applicationContext)
+                        }
+
+                        // Need to ensure these are within the
+                        val jsonRotorPositions = json.getJSONArray("rotorPositions")
+                        val rotorPositions = (0 until jsonRotorPositions.length()).map {
+                            jsonRotorPositions.getString(it).toNumber()
+                        }
+
+                        val jsonRingPositions = json.getJSONArray("ringPositions")
+                        val ringPositions = (0 until jsonRingPositions.length()).map {
+                            jsonRingPositions.getString(it).toNumber()
+                        }
+
+                        val reflector = json.getString("reflector").toReflector(applicationContext)
+
+                        val jsonPlugboardPairs = json.getJSONArray("plugboardPairs")
+                        val plugboardPairs = mutableSetOf<Pair<Int, Int>>()
+                        for (i in 0 until jsonPlugboardPairs.length()) {
+                            val jsonPair = jsonPlugboardPairs.getJSONArray(i)
+                            plugboardPairs.add(
+                                Pair(
+                                    first = jsonPair.getInt(0),
+                                    second = jsonPair.getInt(1)
+                                )
+                            )
+                        }
+
+                        viewModel.handleEvent(EnigmaEvent.PasteEnigmaSettings(
+                            settings = EnigmaHistoryItem(
+                                rotorOneOption = rotorOptions[0],
+                                rotorTwoOption = rotorOptions[1],
+                                rotorThreeOption = rotorOptions[2],
+                                rotorOnePosition = rotorPositions[0],
+                                rotorTwoPosition = rotorPositions[1],
+                                rotorThreePosition = rotorPositions[2],
+                                ringOneOption = ringPositions[0],
+                                ringTwoOption = ringPositions[1],
+                                ringThreeOption = ringPositions[2],
+                                reflectorOption = reflector,
+                                plugboardPairs = plugboardPairs,
+                            )
+                        ))
+                    } catch (e : Exception) {
+                    }
                 }
                 true
             }
             else -> super.onContextItemSelected(item)
         }
-
 }

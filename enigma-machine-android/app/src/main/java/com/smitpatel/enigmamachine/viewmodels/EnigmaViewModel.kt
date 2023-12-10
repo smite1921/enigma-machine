@@ -1,6 +1,5 @@
 package com.smitpatel.enigmamachine.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -13,9 +12,8 @@ import com.smitpatel.enigmamachine.numberToLetter
 import com.smitpatel.enigmamachine.ui.RotorPosition
 import com.smitpatel.enigmamachine.ui.main.ClipboardCopyState
 import com.smitpatel.enigmamachine.ui.main.EnigmaUiState
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import java.lang.Exception
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.Stack
 
 class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
@@ -269,46 +267,7 @@ class EnigmaViewModel(private val savedState: SavedStateHandle) : ViewModel() {
 
             }
             is EnigmaEvent.PasteEnigmaSettings -> {
-                try {
-                    val enigmaSettings = Json
-                        .decodeFromString<ClipboardCopyState.SettingsCopyState>(event.rawText)
-                    enigma.applySettings(
-                        settings = EnigmaHistoryItem(
-                            rotorOneOption = enigmaSettings.rotorOneLabel,
-                            rotorTwoOption = enigmaSettings.rotorTwoLabel,
-                            rotorThreeOption = enigmaSettings.rotorThreeLabel,
-                            rotorOnePosition = enigmaSettings.rotorOnePosition,
-                            rotorTwoPosition = enigmaSettings.rotorTwoPosition,
-                            rotorThreePosition = enigmaSettings.rotorThreePosition,
-                            ringOneOption = enigmaSettings.rotorOneRing,
-                            ringTwoOption = enigmaSettings.rotorTwoRing,
-                            ringThreeOption = enigmaSettings.rotorThreeRing,
-                            reflectorOption = enigmaSettings.reflector,
-                            plugboardPairs = enigmaSettings.plugboardPairs
-                        )
-                    )
-                    enigma.historyStack.clear()
-                    enigmaUiState.value = EnigmaUiState(
-                        rotorOnePosition = enigma.rotorOne.position,
-                        rotorTwoPosition = enigma.rotorTwo.position,
-                        rotorThreePosition = enigma.rotorThree.position,
-                        rotorOneLabel = enigma.rotorOne.rotorOption,
-                        rotorTwoLabel = enigma.rotorTwo.rotorOption,
-                        rotorThreeLabel = enigma.rotorThree.rotorOption,
-                        rawMessage = "",
-                        encodedMessage = "",
-                        activeLampboard = -1,
-                        clipboardCopyState = null,
-                        showSettingsChangedToast = true,
-                        showSettingsErrorToast = false,
-                        pasteError = null,
-                    )
-
-                } catch (e: Exception) {
-                    enigmaUiState.value = enigmaUiState.value?.copy(
-                        showSettingsErrorToast = true,
-                    )
-                }
+                
             }
             is EnigmaEvent.ToastMessageDisplayed -> enigmaUiState.value = enigmaUiState.value?.copy(
                 showSettingsChangedToast = false,
