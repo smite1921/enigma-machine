@@ -6,13 +6,13 @@ plugins {
 
 android {
 
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.smitpatel.enigmamachine"
         minSdk 21
-        targetSdk 33
-        versionCode 10
+        targetSdk 34
+        versionCode 13
         versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
