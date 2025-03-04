@@ -2,8 +2,9 @@
 
 ## Welcome
 
-Welcome to The Enigma Machine Simulator Instruction Website. Delve into the world of cryptography with our comprehensive instruction website for the Enigma Machine Simulator App. Learn how to encode and decode messages using this historically significant encryption device. Discover the app's layout, settings, and step-by-step tutorials on operating the simulator. Unleash your inner codebreaker and embark on an intriguing journey of encryption mastery. Get ready to crack codes like never before.
+Welcome to the official Enigma Machine Website. Delve into the world of cryptography with our comprehensive instructions for the Enigma Machine Simulator App. Learn how to encode and decode messages using this historically significant encryption device. Discover the app's layout, settings, and step-by-step tutorials on operating the simulator. Unleash your inner codebreaker and embark on an intriguing journey of encryption mastery. Get ready to crack codes like never before.
 
+<a href="https://play.google.com/store/apps/details?id=com.smitpatel.enigmamachine" style="display: inline-block; padding: 10px 20px; background-color: #01875f; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; text-align: center;">Install on Google Play</a>
 
 ## Background
 
