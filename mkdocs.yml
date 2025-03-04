@@ -1,14 +1,14 @@
-site_name: Enigma Machine Instructions
+site_name: Enigma Machine
 repo_url: https://github.com/smite1921/enigma-machine
 repo_name: smite1921/enigma-machine
 theme:
   name: material
-  palette:     
+  palette:
     # Palette toggle for light mode
     - scheme: default
       primary: black
       toggle:
-        icon: material/brightness-7 
+        icon: material/brightness-7
         name: Switch to dark mode
     # Palette toggle for dark mode
     - scheme: slate
@@ -17,5 +17,10 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
   logo: images/enigma-logo.png
+nav:
+  - Home: index.md
+  - App Layout: layout.md
+  - Encode & Decode: encode-decode.md
+  - Privacy Policy: privacy-policy.md
 markdown_extensions:
   - attr_list
