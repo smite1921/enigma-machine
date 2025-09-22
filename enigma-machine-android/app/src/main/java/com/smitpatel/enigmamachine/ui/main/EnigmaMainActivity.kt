@@ -1,5 +1,6 @@
 package com.smitpatel.enigmamachine.ui.main
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Build
@@ -32,6 +33,8 @@ class EnigmaMainActivity : AppCompatActivity() {
     private val viewModel : EnigmaViewModel by viewModels()
 
     private val sounds : SoundEffects = SoundEffects
+
+    private var deleteLongPressRunnable : Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,6 +188,7 @@ class EnigmaMainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupViews() {
 
         binding.rotors.rotor1.displayedValues = resources.getStringArray(R.array.rotor_values)
@@ -249,6 +253,13 @@ class EnigmaMainActivity : AppCompatActivity() {
                         button.performClick()
                         when (button.id) {
                             R.id.button_delete -> {
+                                deleteLongPressRunnable = Runnable {
+                                    viewModel.handleEvent(
+                                        event = EnigmaEvent.InputLongDeletePressed
+                                    )
+                                }
+                                button.postDelayed(deleteLongPressRunnable, 1000)
+
                                 SoundEffects.playSound(sound = EnigmaSounds.DELETE)
                                 viewModel.handleEvent(
                                     event = EnigmaEvent.InputDeletePressed
@@ -273,7 +284,14 @@ class EnigmaMainActivity : AppCompatActivity() {
                     }
                     MotionEvent.ACTION_UP -> {
                         button.isPressed = false
-                        if ((button.id != R.id.button_delete) && (button.id !=R.id.button_spacebar)) {
+
+                        // Remove delete long press runnable
+                        if (button.id == R.id.button_delete && deleteLongPressRunnable != null) {
+                            button.removeCallbacks(deleteLongPressRunnable)
+                            deleteLongPressRunnable = null
+                        }
+
+                        if ((button.id != R.id.button_delete) && (button.id != R.id.button_spacebar)) {
                             viewModel.handleEvent(
                                 EnigmaEvent.InputKeyLifted(
                                     input = button.text[0].letterToNumber()
@@ -284,11 +302,6 @@ class EnigmaMainActivity : AppCompatActivity() {
                 }
                 true
             }
-        }
-
-        binding.keyboard.buttonDelete.setOnLongClickListener {
-            viewModel.handleEvent(EnigmaEvent.InputLongDeletePressed)
-            true
         }
 
         binding.textboxes.textRaw.showSoftInputOnFocus = false
