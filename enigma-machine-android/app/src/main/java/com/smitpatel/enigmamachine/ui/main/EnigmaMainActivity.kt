@@ -82,6 +82,7 @@ class EnigmaMainActivity : AppCompatActivity() {
             binding.textboxes.textRaw.setText(it.rawMessage)
             binding.textboxes.textCode.setText(it.encodedMessage)
 
+            binding.textboxes.scrollview.requestFocus()
             binding.textboxes.textRaw.setSelection(it.rawMessage.length)
             binding.textboxes.textCode.setSelection(it.encodedMessage.length)
 
