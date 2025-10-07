@@ -1,7 +1,7 @@
 <p align="center"><img width=30% src="https://user-images.githubusercontent.com/43019533/95927179-142ce080-0d8c-11eb-9a91-7d6fc3898085.png"></p>
 <h1 align="center">Enigma Machine Simulator</h1>
 
-## About 
+## Aboutt
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Enigma_%28crittografia%29_-_Museo_scienza_e_tecnologia_Milano.jpg" align="right" width=20%/>
 
